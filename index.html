@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -139,6 +138,318 @@
                     if (saved) {
                         return JSON.parse(saved);
                     }
+                },
+                pcc: {
+                    beginner: {
+                        'conceptos-pcc': [
+                            {
+                                title: '¿Qué es PCC?',
+                                type: 'multiple-choice',
+                                question: '¿Qué significa PCC en SAP HCM?',
+                                options: [
+                                    'Personal Control Center',
+                                    'Payroll Control Center',
+                                    'Process Control Center',
+                                    'Personnel Configuration Center'
+                                ],
+                                correct: 1,
+                                explanation: 'PCC significa Payroll Control Center, el centro de control de nómina en SAP HCM.'
+                            },
+                            {
+                                title: 'Propósito del PCC',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es el propósito principal del PCC?',
+                                options: [
+                                    'Calcular salarios manualmente',
+                                    'Supervisar y controlar los procesos de nómina de forma centralizada',
+                                    'Crear reportes de RRHH',
+                                    'Gestionar vacaciones'
+                                ],
+                                correct: 1,
+                                explanation: 'El PCC permite supervisar y controlar todos los procesos de nómina desde un punto centralizado.'
+                            },
+                            {
+                                title: 'Componentes del PCC',
+                                type: 'fill-blank',
+                                question: 'El PCC incluye herramientas para monitoreo, control, ______ y análisis:',
+                                placeholder: 'Función principal...',
+                                correct: 'simulacion',
+                                explanation: 'El PCC incluye herramientas de monitoreo, control, simulación y análisis de procesos de nómina.'
+                            },
+                            {
+                                title: 'Usuarios del PCC',
+                                type: 'multiple-choice',
+                                question: '¿Quiénes son los usuarios típicos del PCC?',
+                                options: [
+                                    'Solo empleados',
+                                    'Solo gerentes de RRHH',
+                                    'Administradores de nómina, supervisores y analistas de RRHH',
+                                    'Solo el departamento de TI'
+                                ],
+                                correct: 2,
+                                explanation: 'El PCC es usado por administradores de nómina, supervisores y analistas de RRHH para gestionar procesos.'
+                            },
+                            {
+                                title: 'Integración con SAP HCM',
+                                type: 'multiple-choice',
+                                question: '¿Cómo se integra PCC con otros módulos de SAP HCM?',
+                                options: [
+                                    'Funciona de forma independiente',
+                                    'Se integra completamente con PA, OM, PT y otros módulos',
+                                    'Solo se conecta con PA',
+                                    'Requiere interfaces especiales'
+                                ],
+                                correct: 1,
+                                explanation: 'PCC se integra completamente con Personnel Administration (PA), Organizational Management (OM), Personnel Time (PT) y otros módulos HCM.'
+                            },
+                            {
+                                title: 'Ventajas del PCC',
+                                type: 'fill-blank',
+                                question: 'Una ventaja clave del PCC es la ______ en tiempo real de procesos de nómina:',
+                                placeholder: 'Capacidad principal...',
+                                correct: 'visibilidad',
+                                explanation: 'PCC proporciona visibilidad en tiempo real del estado y progreso de todos los procesos de nómina.'
+                            },
+                            {
+                                title: 'Procesos que Gestiona PCC',
+                                type: 'multiple-choice',
+                                question: '¿Qué procesos puede gestionar el PCC?',
+                                options: [
+                                    'Solo cálculo de nómina regular',
+                                    'Solo nóminas extraordinarias',
+                                    'Nóminas regulares, extraordinarias, ajustes y simulaciones',
+                                    'Solo reportes de nómina'
+                                ],
+                                correct: 2,
+                                explanation: 'PCC puede gestionar nóminas regulares, extraordinarias, ajustes, simulaciones y otros procesos relacionados.'
+                            },
+                            {
+                                title: 'Dashboard del PCC',
+                                type: 'multiple-choice',
+                                question: '¿Qué información muestra típicamente el dashboard del PCC?',
+                                options: [
+                                    'Solo errores de nómina',
+                                    'Estado de procesos, estadísticas, alertas y KPIs de nómina',
+                                    'Solo datos de empleados',
+                                    'Solo información financiera'
+                                ],
+                                correct: 1,
+                                explanation: 'El dashboard del PCC muestra estado de procesos, estadísticas, alertas y KPIs relacionados con la nómina.'
+                            },
+                            {
+                                title: 'Automatización en PCC',
+                                type: 'fill-blank',
+                                question: 'PCC permite la ______ de muchos procesos de nómina para reducir intervención manual:',
+                                placeholder: 'Proceso de mejora...',
+                                correct: 'automatizacion',
+                                explanation: 'La automatización en PCC reduce la necesidad de intervención manual en procesos rutinarios de nómina.'
+                            },
+                            {
+                                title: 'Seguridad en PCC',
+                                type: 'multiple-choice',
+                                question: '¿Cómo maneja PCC la seguridad y autorizaciones?',
+                                options: [
+                                    'No tiene controles de seguridad',
+                                    'Usa el sistema de autorizaciones estándar de SAP',
+                                    'Requiere un sistema de seguridad separado',
+                                    'Solo permite acceso a administradores'
+                                ],
+                                correct: 1,
+                                explanation: 'PCC utiliza el sistema de autorizaciones estándar de SAP para controlar el acceso a funciones y datos.'
+                            }
+                        ],
+                        'configuracion-pcc': [
+                            {
+                                title: 'Configuración Inicial',
+                                type: 'multiple-choice',
+                                question: '¿Qué es lo primero que se debe configurar en PCC?',
+                                options: [
+                                    'Los empleados',
+                                    'Los esquemas de nómina y parámetros del sistema',
+                                    'Los reportes',
+                                    'Las autorizaciones'
+                                ],
+                                correct: 1,
+                                explanation: 'La configuración inicial requiere definir esquemas de nómina y parámetros básicos del sistema.'
+                            },
+                            {
+                                title: 'Variantes de Nómina',
+                                type: 'fill-blank',
+                                question: 'En PCC se configuran ______ de nómina para diferentes tipos de empleados:',
+                                placeholder: 'Configuraciones específicas...',
+                                correct: 'variantes',
+                                explanation: 'Las variantes de nómina permiten configuraciones específicas para diferentes grupos de empleados.'
+                            },
+                            {
+                                title: 'Períodos de Nómina',
+                                type: 'multiple-choice',
+                                question: '¿Cómo se definen los períodos de nómina en PCC?',
+                                options: [
+                                    'Solo mensualmente',
+                                    'Se configuran según las necesidades: semanal, quincenal, mensual, etc.',
+                                    'Solo anualmente',
+                                    'Automáticamente por el sistema'
+                                ],
+                                correct: 1,
+                                explanation: 'Los períodos de nómina se pueden configurar según necesidades: semanal, quincenal, mensual, etc.'
+                            },
+                            {
+                                title: 'Clusters de Nómina',
+                                type: 'multiple-choice',
+                                question: '¿Qué son los clusters en la configuración de PCC?',
+                                options: [
+                                    'Grupos de empleados',
+                                    'Estructuras de datos que almacenan resultados de nómina',
+                                    'Tipos de reportes',
+                                    'Configuraciones de seguridad'
+                                ],
+                                correct: 1,
+                                explanation: 'Los clusters son estructuras de datos especializadas que almacenan los resultados de los cálculos de nómina.'
+                            },
+                            {
+                                title: 'Configuración de Alertas',
+                                type: 'fill-blank',
+                                question: 'PCC permite configurar ______ automáticas para notificar sobre errores o situaciones especiales:',
+                                placeholder: 'Sistema de notificaciones...',
+                                correct: 'alertas',
+                                explanation: 'Las alertas automáticas notifican sobre errores, excepciones o situaciones que requieren atención.'
+                            },
+                            {
+                                title: 'Configuración de Workflows',
+                                type: 'multiple-choice',
+                                question: '¿Para qué se usan los workflows en PCC?',
+                                options: [
+                                    'Solo para aprobaciones',
+                                    'Para automatizar procesos y rutear tareas según reglas de negocio',
+                                    'Solo para reportes',
+                                    'Para backup de datos'
+                                ],
+                                correct: 1,
+                                explanation: 'Los workflows automatizan procesos y rutean tareas según reglas de negocio predefinidas.'
+                            },
+                            {
+                                title: 'Parámetros de Sistema',
+                                type: 'multiple-choice',
+                                question: '¿Qué tipo de parámetros se configuran a nivel de sistema en PCC?',
+                                options: [
+                                    'Solo fechas',
+                                    'Configuraciones globales como monedas, calendarios, y reglas generales',
+                                    'Solo nombres de empleados',
+                                    'Solo códigos de nómina'
+                                ],
+                                correct: 1,
+                                explanation: 'Los parámetros de sistema incluyen configuraciones globales como monedas, calendarios y reglas generales.'
+                            },
+                            {
+                                title: 'Configuración de Interfaces',
+                                type: 'fill-blank',
+                                question: 'PCC requiere configurar ______ con sistemas externos como bancos o entidades gubernamentales:',
+                                placeholder: 'Conexiones externas...',
+                                correct: 'interfaces',
+                                explanation: 'Las interfaces permiten intercambio de datos con sistemas externos como bancos y entidades gubernamentales.'
+                            }
+                        ],
+                        'monitoreo-pcc': [
+                            {
+                                title: 'Monitoreo en Tiempo Real',
+                                type: 'multiple-choice',
+                                question: '¿Qué permite el monitoreo en tiempo real en PCC?',
+                                options: [
+                                    'Solo ver errores pasados',
+                                    'Supervisar el progreso actual de los procesos de nómina',
+                                    'Solo generar reportes mensuales',
+                                    'Solo verificar datos de empleados'
+                                ],
+                                correct: 1,
+                                explanation: 'El monitoreo en tiempo real permite supervisar el progreso actual de todos los procesos de nómina.'
+                            },
+                            {
+                                title: 'Indicadores de Estado',
+                                type: 'fill-blank',
+                                question: 'PCC utiliza ______ visuales para mostrar el estado de los procesos (verde, amarillo, rojo):',
+                                placeholder: 'Sistema visual...',
+                                correct: 'indicadores',
+                                explanation: 'Los indicadores de estado usan colores (verde, amarillo, rojo) para mostrar el estado de los procesos.'
+                            },
+                            {
+                                title: 'Control de Errores',
+                                type: 'multiple-choice',
+                                question: '¿Cómo maneja PCC los errores en procesos de nómina?',
+                                options: [
+                                    'Los ignora automáticamente',
+                                    'Los registra, categoriza y permite su resolución sistemática',
+                                    'Solo los reporta al final del mes',
+                                    'Los corrige automáticamente'
+                                ],
+                                correct: 1,
+                                explanation: 'PCC registra, categoriza errores y proporciona herramientas para su resolución sistemática.'
+                            },
+                            {
+                                title: 'Reportes de Control',
+                                type: 'multiple-choice',
+                                question: '¿Qué tipos de reportes de control genera PCC?',
+                                options: [
+                                    'Solo reportes financieros',
+                                    'Reportes de proceso, excepción, validación y estadísticos',
+                                    'Solo reportes de empleados',
+                                    'No genera reportes'
+                                ],
+                                correct: 1,
+                                explanation: 'PCC genera diversos reportes: de proceso, excepción, validación y estadísticos para control completo.'
+                            },
+                            {
+                                title: 'Simulaciones de Nómina',
+                                type: 'fill-blank',
+                                question: 'PCC permite realizar ______ antes del cálculo real para detectar problemas:',
+                                placeholder: 'Procesos de prueba...',
+                                correct: 'simulaciones',
+                                explanation: 'Las simulaciones permiten probar cálculos de nómina antes de la ejecución real para detectar problemas.'
+                            },
+                            {
+                                title: 'Auditoría de Procesos',
+                                type: 'multiple-choice',
+                                question: '¿Qué información proporciona la auditoría de procesos en PCC?',
+                                options: [
+                                    'Solo datos financieros',
+                                    'Rastro completo de quién, qué, cuándo y cómo se procesaron las nóminas',
+                                    'Solo errores críticos',
+                                    'Solo información de empleados'
+                                ],
+                                correct: 1,
+                                explanation: 'La auditoría proporciona un rastro completo de quién, qué, cuándo y cómo se procesaron las nóminas.'
+                            },
+                            {
+                                title: 'Control de Calidad',
+                                type: 'fill-blank',
+                                question: 'PCC incluye verificaciones de ______ para asegurar la precisión de los cálculos:',
+                                placeholder: 'Verificación de precisión...',
+                                correct: 'calidad',
+                                explanation: 'Las verificaciones de calidad aseguran que los cálculos de nómina sean precisos y consistentes.'
+                            }
+                        ]
+                    }
+                },
+                pcc: {
+                    beginner: {
+                        'conceptos-pcc': {
+                            title: 'Conceptos Básicos PCC',
+                            description: 'Introducción al Payroll Control Center',
+                            icon: '📊',
+                            color: 'bg-purple-50'
+                        },
+                        'configuracion-pcc': {
+                            title: 'Configuración PCC',
+                            description: 'Setup inicial y configuración básica',
+                            icon: '⚙️',
+                            color: 'bg-indigo-50'
+                        },
+                        'monitoreo-pcc': {
+                            title: 'Monitoreo y Control',
+                            description: 'Supervisión de procesos de nómina',
+                            icon: '📈',
+                            color: 'bg-pink-50'
+                        }
+                    }
                 } catch (e) {
                     console.error('Error parsing saved data:', e);
                 }
@@ -186,6 +497,12 @@
                     icon: Database,
                     description: 'Domina los esquemas y estructuras de SAP',
                     color: 'bg-green-50 border-green-200'
+                },
+                pcc: {
+                    title: 'PCC (Payroll Control Center)',
+                    icon: Database,
+                    description: 'Centro de Control de Nómina - Gestión y monitoreo',
+                    color: 'bg-purple-50 border-purple-200'
                 }
             };
 
@@ -1387,6 +1704,48 @@
                                 placeholder: 'Tipo de orden...',
                                 correct: 'secuencial',
                                 explanation: 'Los pasos se ejecutan en orden secuencial según su numeración.'
+                            },
+                            {
+                                title: 'Variables de Sistema en Esquemas',
+                                type: 'multiple-choice',
+                                question: '¿Qué variable del sistema contiene la fecha actual en esquemas?',
+                                options: ['SY-DATUM', 'SY-UZEIT', 'SY-MANDT', 'SY-LANGU'],
+                                correct: 0,
+                                explanation: 'SY-DATUM contiene la fecha actual del sistema y se puede usar en condiciones de esquemas.'
+                            },
+                            {
+                                title: 'Esquemas Jerárquicos',
+                                type: 'multiple-choice',
+                                question: '¿Qué permite la jerarquía en esquemas complejos?',
+                                options: [
+                                    'Solo validación de datos',
+                                    'Llamar a otros esquemas desde un esquema principal',
+                                    'Mejorar el rendimiento',
+                                    'Reducir la complejidad'
+                                ],
+                                correct: 1,
+                                explanation: 'La jerarquía permite que un esquema principal llame a sub-esquemas para modularizar la lógica.'
+                            },
+                            {
+                                title: 'Contexto de Esquemas',
+                                type: 'fill-blank',
+                                question: 'El contexto determina en qué ______ del proceso se ejecuta el esquema:',
+                                placeholder: 'Momento específico...',
+                                correct: 'momento',
+                                explanation: 'El contexto define cuándo y en qué momento del proceso de negocio se ejecuta el esquema.'
+                            },
+                            {
+                                title: 'Esquemas Dinámicos',
+                                type: 'multiple-choice',
+                                question: '¿Qué característica tienen los esquemas dinámicos?',
+                                options: [
+                                    'Se ejecutan más rápido',
+                                    'Pueden modificar su comportamiento según datos en tiempo de ejecución',
+                                    'Solo funcionan en batch',
+                                    'No requieren configuración'
+                                ],
+                                correct: 1,
+                                explanation: 'Los esquemas dinámicos adaptan su comportamiento según los datos y condiciones en tiempo de ejecución.'
                             }
                         ],
                         'configuracion': [
@@ -1457,6 +1816,48 @@
                                 ],
                                 correct: 1,
                                 explanation: 'Se debe documentar el propósito, lógica de negocio, casos de uso y mantenimiento.'
+                            },
+                            {
+                                title: 'Versionado de Esquemas',
+                                type: 'fill-blank',
+                                question: 'Es importante mantener ______ de los esquemas para control de cambios:',
+                                placeholder: 'Qué mantener...',
+                                correct: 'versiones',
+                                explanation: 'El versionado permite rastrear cambios y revertir a versiones anteriores si es necesario.'
+                            },
+                            {
+                                title: 'Backup de Configuración',
+                                type: 'multiple-choice',
+                                question: '¿Cuándo es crítico hacer backup de la configuración de esquemas?',
+                                options: [
+                                    'Solo al final del año',
+                                    'Antes de cualquier cambio importante',
+                                    'Solo cuando hay problemas',
+                                    'Nunca es necesario'
+                                ],
+                                correct: 1,
+                                explanation: 'Siempre hacer backup antes de cambios importantes para poder recuperar la configuración anterior.'
+                            },
+                            {
+                                title: 'Esquemas por Sociedad',
+                                type: 'multiple-choice',
+                                question: '¿Se pueden tener esquemas diferentes por sociedad en SAP?',
+                                options: [
+                                    'No, todos usan el mismo esquema',
+                                    'Sí, cada sociedad puede tener su configuración específica',
+                                    'Solo en ciertos módulos',
+                                    'Solo si son multinacionales'
+                                ],
+                                correct: 1,
+                                explanation: 'Cada sociedad puede tener esquemas específicos según sus requerimientos de negocio y legales.'
+                            },
+                            {
+                                title: 'Monitoreo de Esquemas',
+                                type: 'fill-blank',
+                                question: 'Para monitorear el funcionamiento de esquemas se pueden usar ______:',
+                                placeholder: 'Herramientas de seguimiento...',
+                                correct: 'logs',
+                                explanation: 'Los logs y herramientas de monitoreo permiten verificar que los esquemas funcionen correctamente.'
                             }
                         ]
                     },
@@ -1512,6 +1913,108 @@
                                 ],
                                 correct: 2,
                                 explanation: 'Los esquemas de validación se ejecutan tanto al crear como al modificar documentos contables.'
+                            },
+                            {
+                                title: 'Esquemas de Sustitución vs Validación',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la diferencia principal entre esquemas de sustitución y validación?',
+                                options: [
+                                    'No hay diferencia',
+                                    'Sustitución cambia valores, Validación los verifica',
+                                    'Validación es más rápida',
+                                    'Sustitución solo funciona en FI'
+                                ],
+                                correct: 1,
+                                explanation: 'Los esquemas de sustitución modifican/reemplazan valores automáticamente, mientras que los de validación solo verifican que cumplan reglas.'
+                            },
+                            {
+                                title: 'Prerrequisitos de Esquemas',
+                                type: 'fill-blank',
+                                question: 'Los esquemas de validación pueden tener ______ que deben cumplirse antes de ejecutarse:',
+                                placeholder: 'Condiciones previas...',
+                                correct: 'prerrequisitos',
+                                explanation: 'Los prerrequisitos son condiciones que determinan si el esquema debe ejecutarse o no.'
+                            },
+                            {
+                                title: 'Mensajes en Esquemas',
+                                type: 'multiple-choice',
+                                question: '¿Qué tipos de mensajes pueden generar los esquemas de validación?',
+                                options: [
+                                    'Solo errores (E)',
+                                    'Solo warnings (W)',
+                                    'Errores (E), Warnings (W) e Informativos (I)',
+                                    'Solo informativos (I)'
+                                ],
+                                correct: 2,
+                                explanation: 'Los esquemas pueden generar mensajes de error (E), warning (W) e informativos (I) según la situación.'
+                            },
+                            {
+                                title: 'Esquemas por Aplicación',
+                                type: 'multiple-choice',
+                                question: '¿En qué módulos de SAP se pueden usar esquemas?',
+                                options: [
+                                    'Solo en FI (Finanzas)',
+                                    'Solo en HR (Recursos Humanos)',
+                                    'En múltiples módulos: FI, CO, HR, MM, etc.',
+                                    'Solo en módulos financieros'
+                                ],
+                                correct: 2,
+                                explanation: 'Los esquemas se usan en múltiples módulos SAP: FI, CO, HR, MM, SD y otros según necesidades.'
+                            },
+                            {
+                                title: 'Parámetros en Esquemas',
+                                type: 'fill-blank',
+                                question: 'Los esquemas pueden recibir ______ para modificar su comportamiento dinámicamente:',
+                                placeholder: 'Valores de entrada...',
+                                correct: 'parametros',
+                                explanation: 'Los parámetros permiten que los esquemas se adapten según valores específicos pasados en tiempo de ejecución.'
+                            },
+                            {
+                                title: 'Esquemas Anidados',
+                                type: 'multiple-choice',
+                                question: '¿Qué permite el anidamiento de esquemas?',
+                                options: [
+                                    'Mayor velocidad de procesamiento',
+                                    'Reutilización y modularización de lógica compleja',
+                                    'Menor uso de memoria',
+                                    'Simplificación automática'
+                                ],
+                                correct: 1,
+                                explanation: 'El anidamiento permite reutilizar esquemas pequeños dentro de esquemas más complejos, mejorando la modularización.'
+                            },
+                            {
+                                title: 'Testing de Esquemas',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la mejor práctica para probar esquemas antes de producción?',
+                                options: [
+                                    'Probar solo con datos reales',
+                                    'Usar datos de prueba representativos en ambiente de desarrollo',
+                                    'Probar directamente en producción',
+                                    'No es necesario probar'
+                                ],
+                                correct: 1,
+                                explanation: 'Usar datos de prueba representativos en desarrollo permite identificar problemas sin afectar datos reales.'
+                            },
+                            {
+                                title: 'Rollback en Esquemas',
+                                type: 'fill-blank',
+                                question: 'Si un esquema falla, SAP puede hacer ______ de toda la transacción:',
+                                placeholder: 'Acción de recuperación...',
+                                correct: 'rollback',
+                                explanation: 'El rollback deshace todos los cambios de la transacción si un esquema crítico falla, manteniendo la integridad.'
+                            },
+                            {
+                                title: 'Migración de Esquemas',
+                                type: 'multiple-choice',
+                                question: '¿Qué considerar al migrar esquemas entre versiones de SAP?',
+                                options: [
+                                    'Solo la sintaxis',
+                                    'Compatibilidad, nuevas funciones y cambios en la lógica de negocio',
+                                    'Solo el rendimiento',
+                                    'No hay consideraciones especiales'
+                                ],
+                                correct: 1,
+                                explanation: 'La migración requiere verificar compatibilidad, aprovechar nuevas funciones y adaptar cambios en lógica de negocio.'
                             }
                         ]
                     },
@@ -2020,4 +2523,3 @@
     </script>
 </body>
 </html>
-Claude
