@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -331,254 +332,177 @@
                 }
             };
 
-            // Datos de lecciones simplificados para testing
-            const lessons = {
-                abap: {
+            // TODAS LAS LECCIONES ORGANIZADAS
+            const createLessons = () => {
+                const lessons = {};
+                
+                // ABAP PRINCIPIANTE
+                lessons.abap = {
                     beginner: {
                         'fundamentos': [
-                            {
-                                title: 'Tipos de Datos Básicos',
-                                type: 'multiple-choice',
-                                question: '¿Cuál es el tipo de dato correcto para almacenar un número entero en ABAP?',
-                                options: ['STRING', 'I', 'P', 'C'],
-                                correct: 1,
-                                explanation: 'El tipo "I" (Integer) se usa para números enteros en ABAP.'
-                            },
-                            {
-                                title: 'Declaración de Variables',
-                                type: 'fill-blank',
-                                question: 'Completa la declaración de una variable de texto en ABAP:',
-                                code: `DATA: lv_nombre TYPE ______(50).`,
-                                placeholder: 'Escribe el tipo de dato...',
-                                correct: 'string',
-                                explanation: 'STRING es el tipo para texto variable, C(50) sería para texto fijo de 50 caracteres.'
-                            }
+                            { title: 'Tipos de Datos Básicos', type: 'multiple-choice', question: '¿Cuál es el tipo de dato correcto para almacenar un número entero en ABAP?', options: ['STRING', 'I', 'P', 'C'], correct: 1, explanation: 'El tipo "I" (Integer) se usa para números enteros en ABAP.' },
+                            { title: 'Declaración de Variables', type: 'fill-blank', question: 'Completa la declaración de una variable de texto en ABAP:', code: 'DATA: lv_nombre TYPE ______(50).', placeholder: 'Escribe el tipo de dato...', correct: 'string', explanation: 'STRING es el tipo para texto variable, C(50) sería para texto fijo de 50 caracteres.' },
+                            { title: 'Tipo de Dato Decimal', type: 'multiple-choice', question: '¿Cuál es el tipo de dato más apropiado para almacenar importes monetarios?', options: ['I', 'F', 'P', 'STRING'], correct: 2, explanation: 'El tipo "P" (Packed) es ideal para números decimales y cálculos monetarios.' },
+                            { title: 'Longitud de Campos', type: 'fill-blank', question: 'Declara un campo de tipo caracter con longitud 10:', code: 'DATA: lv_codigo TYPE C LENGTH ______.', placeholder: 'Número...', correct: '10', explanation: 'LENGTH especifica la longitud del campo de tipo caracter.' },
+                            { title: 'Constantes', type: 'multiple-choice', question: '¿Cuál es la forma correcta de declarar una constante en ABAP?', options: ["DATA: lc_max TYPE i VALUE 100", "CONSTANTS: lc_max TYPE i VALUE 100", "CONST: lc_max TYPE i VALUE 100", "STATIC: lc_max TYPE i VALUE 100"], correct: 1, explanation: 'CONSTANTS es la palabra clave para declarar constantes en ABAP.' },
+                            { title: 'Asignación de Variables', type: 'multiple-choice', question: '¿Cuál es la forma correcta de asignar un valor a una variable en ABAP?', options: ['lv_variable := valor', 'lv_variable = valor', 'SET lv_variable = valor', 'lv_variable == valor'], correct: 1, explanation: 'En ABAP se usa el signo igual (=) para asignación de valores.' },
+                            { title: 'Operadores Aritméticos', type: 'fill-blank', question: 'Completa la operación para calcular el resto de una división:', code: 'lv_resultado = lv_numero ______ 3.', placeholder: 'Operador...', correct: 'mod', explanation: 'MOD es el operador para calcular el resto de una división.' },
+                            { title: 'Instrucción WRITE', type: 'fill-blank', question: 'Completa la instrucción para mostrar texto:', code: '______: \'Hola Mundo\'.', placeholder: 'Instrucción...', correct: 'write', explanation: 'WRITE es la instrucción básica para mostrar texto en ABAP.' },
+                            { title: 'Conversión de Tipos', type: 'multiple-choice', question: '¿Qué función usarías para convertir un número a string?', options: ['CONVERT', 'CAST', 'MOVE', 'Asignación directa'], correct: 3, explanation: 'En ABAP la conversión de tipos se hace automáticamente con asignación directa.' },
+                            { title: 'Comentarios en ABAP', type: 'multiple-choice', question: '¿Cuál es la forma correcta de escribir un comentario en ABAP?', options: ['// Este es un comentario', '/* Este es un comentario */', '" Este es un comentario', '# Este es un comentario'], correct: 2, explanation: 'En ABAP se usa el símbolo " (comillas dobles) para comentarios.' }
                         ],
                         'estructuras-control': [
-                            {
-                                title: 'Estructura IF-ENDIF',
-                                type: 'fill-blank',
-                                question: 'Completa la estructura condicional:',
-                                code: `IF lv_edad > 18.\n  WRITE: 'Mayor de edad'.\n______.`,
-                                placeholder: 'Escribe la palabra clave...',
-                                correct: 'endif',
-                                explanation: 'ENDIF cierra la estructura IF en ABAP.'
-                            }
+                            { title: 'Estructura IF-ENDIF', type: 'fill-blank', question: 'Completa la estructura condicional:', code: 'IF lv_edad > 18.\n  WRITE: \'Mayor de edad\'.\n______.', placeholder: 'Escribe la palabra clave...', correct: 'endif', explanation: 'ENDIF cierra la estructura IF en ABAP.' },
+                            { title: 'Operadores Lógicos', type: 'multiple-choice', question: '¿Cuál es el operador lógico AND en ABAP?', options: ['&&', 'AND', '&', 'Y'], correct: 1, explanation: 'En ABAP se usa la palabra "AND" para el operador lógico Y.' },
+                            { title: 'Operador OR', type: 'multiple-choice', question: '¿Cuál es el operador lógico OR en ABAP?', options: ['||', 'OR', '|', 'O'], correct: 1, explanation: 'En ABAP se usa la palabra "OR" para el operador lógico O.' },
+                            { title: 'Operador NOT', type: 'fill-blank', question: 'Completa la condición negativa:', code: 'IF ______ lv_activo = \'X\'.\n  WRITE: \'Usuario inactivo\'.\nENDIF.', placeholder: 'Operador...', correct: 'not', explanation: 'NOT es el operador de negación en ABAP.' },
+                            { title: 'Estructura CASE-WHEN', type: 'multiple-choice', question: '¿Cuál es la estructura correcta para múltiples condiciones?', options: ['SWITCH-CASE-ENDSWITCH', 'CASE-WHEN-ENDCASE', 'SELECT-CASE-ENDSELECT', 'MATCH-CASE-ENDMATCH'], correct: 1, explanation: 'CASE-WHEN-ENDCASE es la estructura para múltiples condiciones en ABAP.' },
+                            { title: 'CASE con OTHERS', type: 'fill-blank', question: 'Completa la estructura CASE para casos no contemplados:', code: 'CASE lv_estado.\n  WHEN \'A\'.\n    WRITE: \'Activo\'.\n  WHEN ______.\n    WRITE: \'Estado desconocido\'.\nENDCASE.', placeholder: 'Palabra clave...', correct: 'others', explanation: 'OTHERS maneja todos los casos no contemplados en CASE.' },
+                            { title: 'Bucle WHILE', type: 'multiple-choice', question: '¿Cuál es la sintaxis correcta para un bucle WHILE?', options: ['WHILE condición DO...ENDWHILE', 'WHILE condición...ENDWHILE', 'DO WHILE condición...ENDDO', 'REPEAT...UNTIL condición'], correct: 1, explanation: 'En ABAP se usa WHILE condición...ENDWHILE.' },
+                            { title: 'Bucle DO', type: 'fill-blank', question: 'Completa el bucle DO con número fijo de iteraciones:', code: 'DO 10 ______.\n  WRITE: sy-index.\nENDDO.', placeholder: 'Palabra clave...', correct: 'times', explanation: 'DO n TIMES...ENDDO ejecuta el bucle n veces.' },
+                            { title: 'Variable del Sistema SY-INDEX', type: 'multiple-choice', question: '¿Qué contiene la variable SY-INDEX en un bucle DO?', options: ['El número total de iteraciones', 'El número de la iteración actual', 'El valor de la condición', 'El tiempo transcurrido'], correct: 1, explanation: 'SY-INDEX contiene el número de la iteración actual en bucles DO.' },
+                            { title: 'Instrucción EXIT', type: 'multiple-choice', question: '¿Qué hace la instrucción EXIT en un bucle?', options: ['Termina el programa', 'Sale del bucle actual', 'Reinicia el bucle', 'Pausa el bucle'], correct: 1, explanation: 'EXIT termina inmediatamente el bucle actual.' },
+                            { title: 'Instrucción CONTINUE', type: 'multiple-choice', question: '¿Qué hace la instrucción CONTINUE en un bucle?', options: ['Termina el bucle', 'Salta a la siguiente iteración', 'Reinicia el bucle desde el principio', 'Pausa el bucle'], correct: 1, explanation: 'CONTINUE salta el resto de la iteración actual y continúa con la siguiente.' }
                         ],
                         'tablas-internas': [
-                            {
-                                title: 'Declaración de Tabla Interna',
-                                type: 'fill-blank',
-                                question: 'Declara una tabla interna de tipo estándar:',
-                                code: `DATA: lt_empleados TYPE ______ TABLE OF ty_empleado.`,
-                                placeholder: 'Tipo de tabla...',
-                                correct: 'standard',
-                                explanation: 'STANDARD TABLE es el tipo más común de tabla interna en ABAP.'
-                            }
+                            { title: 'Declaración de Tabla Interna', type: 'fill-blank', question: 'Declara una tabla interna de tipo estándar:', code: 'DATA: lt_empleados TYPE ______ TABLE OF ty_empleado.', placeholder: 'Tipo de tabla...', correct: 'standard', explanation: 'STANDARD TABLE es el tipo más común de tabla interna en ABAP.' },
+                            { title: 'Tipos de Tablas Internas', type: 'multiple-choice', question: '¿Cuáles son los tres tipos principales de tablas internas?', options: ['STANDARD, SORTED, HASHED', 'INTERNAL, EXTERNAL, TEMPORARY', 'SIMPLE, COMPLEX, NESTED', 'LOCAL, GLOBAL, SHARED'], correct: 0, explanation: 'Los tres tipos son: STANDARD (acceso por índice), SORTED (ordenada) y HASHED (acceso por clave).' },
+                            { title: 'Declaración con LIKE', type: 'fill-blank', question: 'Declara una tabla interna basada en otra tabla:', code: 'DATA: lt_nueva ______ TABLE OF lt_existente.', placeholder: 'Palabra clave...', correct: 'like', explanation: 'LIKE TABLE OF crea una tabla con la misma estructura que otra existente.' },
+                            { title: 'Work Area', type: 'multiple-choice', question: '¿Para qué se usa una Work Area con tablas internas?', options: ['Para ordenar la tabla', 'Para procesar registros individuales', 'Para crear copias de la tabla', 'Para borrar la tabla'], correct: 1, explanation: 'La Work Area se usa para procesar registros individuales de la tabla interna.' },
+                            { title: 'Declaración de Work Area', type: 'fill-blank', question: 'Declara una work area para la tabla:', code: 'DATA: ls_empleado ______ LINE OF lt_empleados.', placeholder: 'Palabra clave...', correct: 'like', explanation: 'LIKE LINE OF crea una work area con la estructura de una línea de la tabla.' },
+                            { title: 'Comando APPEND', type: 'multiple-choice', question: '¿Qué hace el comando APPEND en una tabla interna?', options: ['Borra el último registro', 'Añade un registro al final', 'Ordena la tabla', 'Cuenta los registros'], correct: 1, explanation: 'APPEND añade un nuevo registro al final de la tabla interna.' },
+                            { title: 'Sintaxis APPEND', type: 'fill-blank', question: 'Completa el comando para añadir un registro:', code: 'ls_empleado-nombre = \'Juan\'.\n______ ls_empleado TO lt_empleados.', placeholder: 'Comando...', correct: 'append', explanation: 'APPEND work_area TO tabla añade el contenido de la work area a la tabla.' },
+                            { title: 'Loop en Tablas', type: 'multiple-choice', question: '¿Cuál es la sintaxis correcta para recorrer una tabla interna?', options: ['LOOP AT lt_tabla INTO ls_linea', 'FOR EACH ls_linea IN lt_tabla', 'WHILE ls_linea = NEXT(lt_tabla)', 'ITERATE lt_tabla INTO ls_linea'], correct: 0, explanation: 'LOOP AT tabla INTO estructura es la sintaxis estándar en ABAP.' },
+                            { title: 'Variable SY-TABIX', type: 'multiple-choice', question: '¿Qué contiene SY-TABIX en un LOOP AT?', options: ['El total de registros', 'El índice del registro actual', 'El valor del registro', 'El tipo de tabla'], correct: 1, explanation: 'SY-TABIX contiene el índice del registro actual en el loop.' },
+                            { title: 'Comando READ TABLE', type: 'fill-blank', question: 'Completa el comando para leer un registro específico:', code: '______ TABLE lt_empleados INTO ls_empleado INDEX 1.', placeholder: 'Comando...', correct: 'read', explanation: 'READ TABLE permite leer un registro específico de la tabla interna.' },
+                            { title: 'Verificación después de READ', type: 'multiple-choice', question: '¿Qué variable del sistema verificas después de READ TABLE?', options: ['SY-TABIX', 'SY-SUBRC', 'SY-INDEX', 'SY-UNAME'], correct: 1, explanation: 'SY-SUBRC = 0 indica que READ TABLE encontró el registro buscado.' },
+                            { title: 'Comando MODIFY', type: 'multiple-choice', question: '¿Qué hace el comando MODIFY en una tabla interna?', options: ['Borra un registro', 'Añade un registro', 'Actualiza un registro existente', 'Cuenta los registros'], correct: 2, explanation: 'MODIFY actualiza un registro existente en la tabla interna.' },
+                            { title: 'Comando DELETE', type: 'fill-blank', question: 'Completa el comando para borrar el registro actual en un loop:', code: 'LOOP AT lt_tabla INTO ls_linea.\n  IF ls_linea-activo = \' \'.\n    ______ lt_tabla.\n  ENDIF.\nENDLOOP.', placeholder: 'Comando...', correct: 'delete', explanation: 'DELETE tabla (sin índice) borra el registro actual dentro de un loop.' },
+                            { title: 'Comando CLEAR', type: 'multiple-choice', question: '¿Cuál es la diferencia entre CLEAR y REFRESH?', options: ['Son sinónimos', 'CLEAR vacía work area, REFRESH vacía tabla', 'CLEAR es más rápido', 'REFRESH es obsoleto'], correct: 1, explanation: 'CLEAR vacía el contenido de una work area, REFRESH vacía completamente una tabla interna.' },
+                            { title: 'Función LINES', type: 'fill-blank', question: 'Completa para obtener el número de registros:', code: 'lv_contador = ______ ( lt_empleados ).', placeholder: 'Función...', correct: 'lines', explanation: 'LINES() devuelve el número de registros de una tabla interna.' }
                         ]
                     },
+                    // ABAP INTERMEDIO
                     intermediate: {
                         'abap-oo': [
-                            {
-                                title: 'Definición de Clase',
-                                type: 'fill-blank',
-                                question: 'Completa la definición de una clase:',
-                                code: `______ lcl_empleado DEFINITION.\n  PUBLIC SECTION.\n    DATA: mv_nombre TYPE string.\nENDCLASS.`,
-                                placeholder: 'Palabras clave...',
-                                correct: 'class',
-                                explanation: 'Las clases se definen con CLASS...ENDCLASS en ABAP.'
-                            }
+                            { title: 'Definición de Clase', type: 'fill-blank', question: 'Completa la definición de una clase:', code: '______ lcl_empleado DEFINITION.\n  PUBLIC SECTION.\n    DATA: mv_nombre TYPE string.\nENDCLASS.', placeholder: 'Palabra clave...', correct: 'class', explanation: 'Las clases se definen con CLASS...ENDCLASS en ABAP.' },
+                            { title: 'Secciones de Visibilidad', type: 'multiple-choice', question: '¿En qué sección declararías un método que solo debe ser accesible desde subclases?', options: ['PUBLIC SECTION', 'PRIVATE SECTION', 'PROTECTED SECTION', 'FRIEND SECTION'], correct: 2, explanation: 'PROTECTED SECTION es accesible desde la misma clase y sus subclases.' },
+                            { title: 'Atributos de Clase', type: 'multiple-choice', question: '¿Cuál es la diferencia entre atributos de instancia y de clase?', options: ['No hay diferencia', 'Instancia: cada objeto tiene su copia, Clase: compartido por todos', 'Instancia es más rápido', 'Clase es obsoleto'], correct: 1, explanation: 'Atributos de instancia: cada objeto tiene su propia copia. Atributos de clase: compartidos por todas las instancias.' },
+                            { title: 'Constructor de Clase', type: 'multiple-choice', question: '¿Cuál es el nombre del método constructor en ABAP OO?', options: ['constructor', 'new', 'init', 'create'], correct: 0, explanation: 'El método constructor se llama "constructor" en ABAP OO.' },
+                            { title: 'Instanciación Moderna', type: 'multiple-choice', question: '¿Cuál es la forma moderna de crear una instancia de objeto?', options: ['CREATE OBJECT lo_emp', 'lo_emp = NEW lcl_empleado( )', 'INSTANTIATE lo_emp TYPE lcl_empleado', 'lo_emp = lcl_empleado=>new( )'], correct: 1, explanation: 'NEW es la forma moderna de instanciar objetos en ABAP 7.4+.' }
                         ],
                         'field-symbols': [
-                            {
-                                title: 'Declaración de Field Symbol',
-                                type: 'fill-blank',
-                                question: 'Declara un field symbol:',
-                                code: `______-SYMBOLS: <fs_empleado> TYPE ty_empleado.`,
-                                placeholder: 'Palabra clave...',
-                                correct: 'field',
-                                explanation: 'FIELD-SYMBOLS declara un field symbol que actúa como puntero.'
-                            }
+                            { title: 'Declaración de Field Symbol', type: 'fill-blank', question: 'Declara un field symbol:', code: '______-SYMBOLS: <fs_empleado> TYPE ty_empleado.', placeholder: 'Palabra clave...', correct: 'field', explanation: 'FIELD-SYMBOLS declara un field symbol que actúa como puntero.' },
+                            { title: 'Asignación de Field Symbol', type: 'fill-blank', question: 'Asigna una variable al field symbol:', code: '______ <fs_empleado> TO ls_empleado.', placeholder: 'Comando...', correct: 'assign', explanation: 'ASSIGN vincula un field symbol a una variable o área de memoria.' },
+                            { title: 'Verificación de Asignación', type: 'multiple-choice', question: '¿Cómo verificas si un field symbol está asignado?', options: ['IF <fs_data> IS ASSIGNED', 'IF <fs_data> IS NOT INITIAL', 'IF <fs_data> IS BOUND', 'IF <fs_data> IS ACTIVE'], correct: 0, explanation: 'IS ASSIGNED verifica si un field symbol está apuntando a algún dato.' },
+                            { title: 'Ventajas de Field Symbols', type: 'multiple-choice', question: '¿Cuál es la principal ventaja de usar field symbols?', options: ['Ocupan menos memoria', 'Son más seguros', 'Mejoran el rendimiento al evitar copias de datos', 'Son más fáciles de usar'], correct: 2, explanation: 'Los field symbols apuntan directamente a la memoria, evitando copias costosas de datos.' },
+                            { title: 'Field Symbol en Loop', type: 'fill-blank', question: 'Usa field symbol en un loop para mejor rendimiento:', code: 'LOOP AT lt_empleados ______ <fs_empleado>.\n  <fs_empleado>-salario = <fs_empleado>-salario * \'1.1\'.\nENDLOOP.', placeholder: 'Palabra clave...', correct: 'assigning', explanation: 'ASSIGNING permite modificar directamente los registros de la tabla sin copiar datos.' }
                         ],
                         'modularizacion': [
-                            {
-                                title: 'Módulos de Función',
-                                type: 'multiple-choice',
-                                question: '¿Cuál es la principal ventaja de los módulos de función?',
-                                options: [
-                                    'Son más rápidos',
-                                    'Permiten reutilización de código',
-                                    'Ocupan menos memoria',
-                                    'Son más seguros'
-                                ],
-                                correct: 1,
-                                explanation: 'Los módulos de función permiten reutilizar código y centralizar lógica común.'
-                            }
+                            { title: 'Módulos de Función', type: 'multiple-choice', question: '¿Cuál es la principal ventaja de los módulos de función?', options: ['Son más rápidos', 'Permiten reutilización de código', 'Ocupan menos memoria', 'Son más seguros'], correct: 1, explanation: 'Los módulos de función permiten reutilizar código y centralizar lógica común.' },
+                            { title: 'Llamada a Función', type: 'fill-blank', question: 'Completa la llamada a un módulo de función:', code: '______ FUNCTION \'Z_CALCULAR_IMPUESTO\'\n  EXPORTING\n    iv_importe = lv_importe\n  IMPORTING\n    ev_impuesto = lv_impuesto.', placeholder: 'Comando...', correct: 'call', explanation: 'CALL FUNCTION es el comando para ejecutar un módulo de función.' },
+                            { title: 'Verificación de Función', type: 'multiple-choice', question: '¿Qué debes verificar después de llamar a una función?', options: ['SY-TABIX', 'SY-SUBRC', 'SY-INDEX', 'SY-UNAME'], correct: 1, explanation: 'SY-SUBRC indica si la función se ejecutó correctamente (0) o hubo error.' }
                         ],
                         'debugging': [
-                            {
-                                title: 'Activación del Debugger',
-                                type: 'multiple-choice',
-                                question: '¿Cuál es la forma más común de activar el debugger en ABAP?',
-                                options: [
-                                    'F8',
-                                    '/H en el campo de comandos',
-                                    'Ctrl+D',
-                                    'Alt+F12'
-                                ],
-                                correct: 1,
-                                explanation: 'Escribir /H en el campo de comandos SAP activa el debugger para la siguiente acción.'
-                            }
+                            { title: 'Activación del Debugger', type: 'multiple-choice', question: '¿Cuál es la forma más común de activar el debugger en ABAP?', options: ['F8', '/H en el campo de comandos', 'Ctrl+D', 'Alt+F12'], correct: 1, explanation: 'Escribir /H en el campo de comandos SAP activa el debugger para la siguiente acción.' },
+                            { title: 'Navegación F5', type: 'multiple-choice', question: '¿Qué hace la tecla F5 en el debugger?', options: ['Ejecuta hasta el siguiente breakpoint', 'Ejecuta paso a paso (Step Into)', 'Sale del debugger', 'Ejecuta la línea actual sin entrar en subcódigo'], correct: 1, explanation: 'F5 ejecuta paso a paso entrando en funciones, métodos y subrutinas (Step Into).' },
+                            { title: 'Navegación F6', type: 'multiple-choice', question: '¿Qué hace la tecla F6 en el debugger?', options: ['Step Into (entra en subcódigo)', 'Step Over (ejecuta sin entrar en subcódigo)', 'Continue (continúa ejecución)', 'Step Return (sale de la función actual)'], correct: 1, explanation: 'F6 ejecuta la línea actual sin entrar en funciones o métodos (Step Over).' },
+                            { title: 'Navegación F8', type: 'multiple-choice', question: '¿Qué hace la tecla F8 en el debugger?', options: ['Step Into', 'Step Over', 'Continue (continúa hasta el siguiente breakpoint)', 'Termina el programa'], correct: 2, explanation: 'F8 continúa la ejecución normal hasta encontrar el siguiente breakpoint.' },
+                            { title: 'Breakpoints', type: 'fill-blank', question: 'Completa el comando para insertar un breakpoint dinámico en el código:', code: 'DATA: lv_valor TYPE i.\nlv_valor = 10.\n______-POINT.\nWRITE: lv_valor.', placeholder: 'Comando...', correct: 'break', explanation: 'BREAK-POINT inserta un breakpoint hard-coded que siempre detiene la ejecución.' }
                         ]
                     },
+                    // ABAP AVANZADO
                     advanced: {
                         'patrones-diseno': [
-                            {
-                                title: 'Factory Pattern',
-                                type: 'multiple-choice',
-                                question: '¿Cuál es el beneficio principal del patrón Factory?',
-                                options: [
-                                    'Mejora el rendimiento',
-                                    'Centraliza la creación de objetos',
-                                    'Reduce el uso de memoria',
-                                    'Simplifica la herencia'
-                                ],
-                                correct: 1,
-                                explanation: 'El patrón Factory centraliza y controla la creación de objetos.'
-                            }
+                            { title: 'Factory Pattern', type: 'multiple-choice', question: '¿Cuál es el beneficio principal del patrón Factory?', options: ['Mejora el rendimiento', 'Centraliza la creación de objetos', 'Reduce el uso de memoria', 'Simplifica la herencia'], correct: 1, explanation: 'El patrón Factory centraliza y controla la creación de objetos.' },
+                            { title: 'Singleton Pattern', type: 'fill-blank', question: 'Implementa el patrón Singleton:', code: 'CLASS-DATA: go_instance TYPE REF TO lcl_singleton.\nMETHOD get_instance.\n  IF go_instance IS ______.\n    go_instance = NEW #( ).\n  ENDIF.\nENDMETHOD.', placeholder: 'Condición...', correct: 'initial', explanation: 'Se verifica si la instancia IS INITIAL antes de crearla por primera vez.' }
                         ],
                         'performance': [
-                            {
-                                title: 'Optimización SQL',
-                                type: 'multiple-choice',
-                                question: '¿Cuál es la mejor práctica para consultas SQL en ABAP?',
-                                options: [
-                                    'Usar SELECT *',
-                                    'Usar SELECT con campos específicos',
-                                    'Usar múltiples SELECT individuales',
-                                    'Evitar WHERE clause'
-                                ],
-                                correct: 1,
-                                explanation: 'SELECT con campos específicos reduce transferencia de datos y mejora rendimiento.'
-                            }
+                            { title: 'Optimización SQL', type: 'multiple-choice', question: '¿Cuál es la mejor práctica para consultas SQL en ABAP?', options: ['Usar SELECT *', 'Usar SELECT con campos específicos', 'Usar múltiples SELECT individuales', 'Evitar WHERE clause'], correct: 1, explanation: 'SELECT con campos específicos reduce transferencia de datos y mejora rendimiento.' },
+                            { title: 'Índices de Base de Datos', type: 'fill-blank', question: 'Los índices mejoran el rendimiento de consultas con cláusula ______:', placeholder: 'Cláusula SQL...', correct: 'where', explanation: 'Los índices aceleran las consultas que usan WHERE para filtrar datos.' }
                         ]
                     }
-                },
-                schemas: {
+                };
+
+                // ESQUEMAS SAP
+                lessons.schemas = {
                     beginner: {
                         'conceptos-basicos': [
-                            {
-                                title: '¿Qué es un Esquema SAP?',
-                                type: 'multiple-choice',
-                                question: '¿Cuál es la definición correcta de un esquema en SAP?',
-                                options: [
-                                    'Una tabla de base de datos',
-                                    'Un conjunto de reglas y cálculos que se ejecutan automáticamente',
-                                    'Un reporte de datos',
-                                    'Una transacción específica'
-                                ],
-                                correct: 1,
-                                explanation: 'Un esquema SAP es un conjunto de reglas, cálculos y validaciones que se ejecutan automáticamente en procesos específicos.'
-                            }
+                            { title: '¿Qué es un Esquema SAP?', type: 'multiple-choice', question: '¿Cuál es la definición correcta de un esquema en SAP?', options: ['Una tabla de base de datos', 'Un conjunto de reglas y cálculos que se ejecutan automáticamente', 'Un reporte de datos', 'Una transacción específica'], correct: 1, explanation: 'Un esquema SAP es un conjunto de reglas, cálculos y validaciones que se ejecutan automáticamente en procesos específicos.' },
+                            { title: 'Tipos de Esquemas', type: 'multiple-choice', question: '¿Cuáles son los tres tipos principales de esquemas en SAP?', options: ['Cálculo, Validación y Sustitución', 'Entrada, Proceso y Salida', 'Maestro, Transaccional y Histórico', 'Activo, Pasivo y Neutral'], correct: 0, explanation: 'Los tres tipos principales son: Esquemas de Cálculo, Esquemas de Validación y Esquemas de Sustitución.' },
+                            { title: 'Estructura de un Esquema', type: 'fill-blank', question: 'Un esquema SAP está compuesto por una secuencia de ______:', placeholder: 'Completa la palabra...', correct: 'pasos', explanation: 'Los esquemas están compuestos por una secuencia de pasos que se ejecutan en orden.' },
+                            { title: 'Pasos en un Esquema', type: 'multiple-choice', question: '¿Qué elementos principales contiene un paso de esquema?', options: ['Solo una condición', 'Solo una cuenta', 'Condición, Cuenta y Asignación', 'Solo una asignación'], correct: 2, explanation: 'Cada paso contiene: Condición (cuándo se ejecuta), Cuenta (qué cuenta afecta) y Asignación (cómo se calcula).' },
+                            { title: 'Condiciones en Esquemas', type: 'multiple-choice', question: 'Las condiciones en los esquemas se evalúan como:', options: ['Verdadero o Falso', 'Números enteros', 'Texto descriptivo', 'Fechas'], correct: 0, explanation: 'Las condiciones se evalúan como Verdadero (TRUE) o Falso (FALSE) para determinar si el paso se ejecuta.' }
                         ],
                         'configuracion': [
-                            {
-                                title: 'Creación de Esquemas',
-                                type: 'multiple-choice',
-                                question: '¿En qué herramienta se crean los esquemas SAP?',
-                                options: [
-                                    'SE80',
-                                    'SPRO (IMG)',
-                                    'SE11',
-                                    'SM30'
-                                ],
-                                correct: 1,
-                                explanation: 'Los esquemas se crean y configuran en SPRO (Implementation Guide).'
-                            }
+                            { title: 'Creación de Esquemas', type: 'multiple-choice', question: '¿En qué herramienta se crean los esquemas SAP?', options: ['SE80', 'SPRO (IMG)', 'SE11', 'SM30'], correct: 1, explanation: 'Los esquemas se crean y configuran en SPRO (Implementation Guide).' },
+                            { title: 'Naming Convention', type: 'fill-blank', question: 'Los esquemas personalizados deben comenzar con ______ o ______:', placeholder: 'Prefijos...', correct: 'z', explanation: 'Los esquemas personalizados deben comenzar con Z o Y para distinguirlos de los estándar.' },
+                            { title: 'Copia de Esquemas', type: 'multiple-choice', question: '¿Cuál es la mejor práctica al crear esquemas personalizados?', options: ['Crear desde cero', 'Copiar un esquema estándar y modificarlo', 'Usar solo esquemas SAP', 'Evitar usar esquemas'], correct: 1, explanation: 'Es mejor copiar un esquema estándar similar y modificarlo según necesidades.' },
+                            { title: 'Transporte de Esquemas', type: 'multiple-choice', question: '¿Cómo se transportan los esquemas entre sistemas?', options: ['Manualmente', 'Mediante órdenes de transporte', 'Por email', 'No se pueden transportar'], correct: 1, explanation: 'Los esquemas se transportan mediante órdenes de transporte como otras configuraciones.' },
+                            { title: 'Pruebas de Esquemas', type: 'fill-blank', question: 'Antes de activar un esquema en producción, se debe probar en ______:', placeholder: 'Tipo de sistema...', correct: 'desarrollo', explanation: 'Los esquemas deben probarse exhaustivamente en desarrollo antes de pasar a producción.' }
                         ]
                     },
                     intermediate: {
                         'esquemas-avanzados': [
-                            {
-                                title: 'Configuración de Esquemas',
-                                type: 'multiple-choice',
-                                question: '¿En qué transacción se configuran los esquemas de contabilización automática?',
-                                options: ['OB41', 'OBX1', 'OBYC', 'OBA1'],
-                                correct: 0,
-                                explanation: 'OB41 es la transacción para configurar esquemas de contabilización automática en SAP.'
-                            }
+                            { title: 'Configuración de Esquemas', type: 'multiple-choice', question: '¿En qué transacción se configuran los esquemas de contabilización automática?', options: ['OB41', 'OBX1', 'OBYC', 'OBA1'], correct: 0, explanation: 'OB41 es la transacción para configurar esquemas de contabilización automática en SAP.' },
+                            { title: 'Asignación de Esquemas', type: 'fill-blank', question: 'Los esquemas se asignan a ______ específicas:', code: 'Sociedad: 1000\nEsquema: RMCL00', placeholder: 'Elemento de configuración...', correct: 'sociedades', explanation: 'Los esquemas se asignan a sociedades específicas según sus requerimientos.' },
+                            { title: 'Debugging de Esquemas', type: 'multiple-choice', question: '¿Qué herramienta se usa para hacer debug de esquemas SAP?', options: ['SE80', 'SE11', 'Depurador ABAP', 'ST05'], correct: 2, explanation: 'El depurador ABAP permite hacer debug de esquemas para ver el flujo de ejecución paso a paso.' },
+                            { title: 'Validación de Esquemas', type: 'multiple-choice', question: '¿Cuándo se ejecutan los esquemas de validación?', options: ['Solo al crear documentos', 'Solo al modificar documentos', 'Al crear y modificar documentos', 'Solo al consultar documentos'], correct: 2, explanation: 'Los esquemas de validación se ejecutan tanto al crear como al modificar documentos contables.' },
+                            { title: 'Mensajes en Esquemas', type: 'multiple-choice', question: '¿Qué tipos de mensajes pueden generar los esquemas de validación?', options: ['Solo errores (E)', 'Solo warnings (W)', 'Errores (E), Warnings (W) e Informativos (I)', 'Solo informativos (I)'], correct: 2, explanation: 'Los esquemas pueden generar mensajes de error (E), warning (W) e informativos (I) según la situación.' }
                         ]
                     },
                     advanced: {
                         'optimizacion': [
-                            {
-                                title: 'Esquemas Complejos',
-                                type: 'multiple-choice',
-                                question: '¿Cuál es la mejor práctica para esquemas con muchos pasos?',
-                                options: [
-                                    'Usar un solo esquema grande',
-                                    'Dividir en múltiples esquemas más pequeños',
-                                    'Evitar usar esquemas',
-                                    'Usar solo validaciones manuales'
-                                ],
-                                correct: 1,
-                                explanation: 'Es mejor dividir esquemas complejos en múltiples esquemas más pequeños y manejables.'
-                            }
+                            { title: 'Esquemas Complejos', type: 'multiple-choice', question: '¿Cuál es la mejor práctica para esquemas con muchos pasos?', options: ['Usar un solo esquema grande', 'Dividir en múltiples esquemas más pequeños', 'Evitar usar esquemas', 'Usar solo validaciones manuales'], correct: 1, explanation: 'Es mejor dividir esquemas complejos en múltiples esquemas más pequeños y manejables.' },
+                            { title: 'Optimización de Performance', type: 'fill-blank', question: 'Para mejorar el rendimiento, las condiciones más ______ deben ir primero:', placeholder: 'Tipo de condición...', correct: 'restrictivas', explanation: 'Las condiciones más restrictivas deben ir primero para filtrar rápidamente y evitar procesamiento innecesario.' },
+                            { title: 'Gestión de Errores', type: 'multiple-choice', question: '¿Qué sucede cuando un esquema encuentra un error durante la ejecución?', options: ['Continúa con el siguiente paso', 'Se detiene y revierte toda la transacción', 'Solo revierte el paso actual', 'Genera un warning y continúa'], correct: 1, explanation: 'Los errores en esquemas detienen la ejecución y revierten toda la transacción para mantener la integridad.' }
                         ]
                     }
-                },
-                pcc: {
+                };
+
+                // PCC
+                lessons.pcc = {
                     beginner: {
                         'conceptos-pcc': [
-                            {
-                                title: '¿Qué es PCC?',
-                                type: 'multiple-choice',
-                                question: '¿Qué significa PCC en SAP HCM?',
-                                options: [
-                                    'Personal Control Center',
-                                    'Payroll Control Center',
-                                    'Process Control Center',
-                                    'Personnel Configuration Center'
-                                ],
-                                correct: 1,
-                                explanation: 'PCC significa Payroll Control Center, el centro de control de nómina en SAP HCM.'
-                            }
+                            { title: '¿Qué es PCC?', type: 'multiple-choice', question: '¿Qué significa PCC en SAP HCM?', options: ['Personal Control Center', 'Payroll Control Center', 'Process Control Center', 'Personnel Configuration Center'], correct: 1, explanation: 'PCC significa Payroll Control Center, el centro de control de nómina en SAP HCM.' },
+                            { title: 'Propósito del PCC', type: 'multiple-choice', question: '¿Cuál es el propósito principal del PCC?', options: ['Calcular salarios manualmente', 'Supervisar y controlar los procesos de nómina de forma centralizada', 'Crear reportes de RRHH', 'Gestionar vacaciones'], correct: 1, explanation: 'El PCC permite supervisar y controlar todos los procesos de nómina desde un punto centralizado.' },
+                            { title: 'Componentes del PCC', type: 'fill-blank', question: 'El PCC incluye herramientas para monitoreo, control, ______ y análisis:', placeholder: 'Función principal...', correct: 'simulacion', explanation: 'El PCC incluye herramientas de monitoreo, control, simulación y análisis de procesos de nómina.' },
+                            { title: 'Usuarios del PCC', type: 'multiple-choice', question: '¿Quiénes son los usuarios típicos del PCC?', options: ['Solo empleados', 'Solo gerentes de RRHH', 'Administradores de nómina, supervisores y analistas de RRHH', 'Solo el departamento de TI'], correct: 2, explanation: 'El PCC es usado por administradores de nómina, supervisores y analistas de RRHH para gestionar procesos.' },
+                            { title: 'Integración con SAP HCM', type: 'multiple-choice', question: '¿Cómo se integra PCC con otros módulos de SAP HCM?', options: ['Funciona de forma independiente', 'Se integra completamente con PA, OM, PT y otros módulos', 'Solo se conecta con PA', 'Requiere interfaces especiales'], correct: 1, explanation: 'PCC se integra completamente con Personnel Administration (PA), Organizational Management (OM), Personnel Time (PT) y otros módulos HCM.' },
+                            { title: 'Ventajas del PCC', type: 'fill-blank', question: 'Una ventaja clave del PCC es la ______ en tiempo real de procesos de nómina:', placeholder: 'Capacidad principal...', correct: 'visibilidad', explanation: 'PCC proporciona visibilidad en tiempo real del estado y progreso de todos los procesos de nómina.' },
+                            { title: 'Procesos que Gestiona PCC', type: 'multiple-choice', question: '¿Qué procesos puede gestionar el PCC?', options: ['Solo cálculo de nómina regular', 'Solo nóminas extraordinarias', 'Nóminas regulares, extraordinarias, ajustes y simulaciones', 'Solo reportes de nómina'], correct: 2, explanation: 'PCC puede gestionar nóminas regulares, extraordinarias, ajustes, simulaciones y otros procesos relacionados.' },
+                            { title: 'Dashboard del PCC', type: 'multiple-choice', question: '¿Qué información muestra típicamente el dashboard del PCC?', options: ['Solo errores de nómina', 'Estado de procesos, estadísticas, alertas y KPIs de nómina', 'Solo datos de empleados', 'Solo información financiera'], correct: 1, explanation: 'El dashboard del PCC muestra estado de procesos, estadísticas, alertas y KPIs relacionados con la nómina.' },
+                            { title: 'Automatización en PCC', type: 'fill-blank', question: 'PCC permite la ______ de muchos procesos de nómina para reducir intervención manual:', placeholder: 'Proceso de mejora...', correct: 'automatizacion', explanation: 'La automatización en PCC reduce la necesidad de intervención manual en procesos rutinarios de nómina.' },
+                            { title: 'Seguridad en PCC', type: 'multiple-choice', question: '¿Cómo maneja PCC la seguridad y autorizaciones?', options: ['No tiene controles de seguridad', 'Usa el sistema de autorizaciones estándar de SAP', 'Requiere un sistema de seguridad separado', 'Solo permite acceso a administradores'], correct: 1, explanation: 'PCC utiliza el sistema de autorizaciones estándar de SAP para controlar el acceso a funciones y datos.' }
                         ],
                         'configuracion-pcc': [
-                            {
-                                title: 'Configuración Inicial',
-                                type: 'multiple-choice',
-                                question: '¿Qué es lo primero que se debe configurar en PCC?',
-                                options: [
-                                    'Los empleados',
-                                    'Los esquemas de nómina y parámetros del sistema',
-                                    'Los reportes',
-                                    'Las autorizaciones'
-                                ],
-                                correct: 1,
-                                explanation: 'La configuración inicial requiere definir esquemas de nómina y parámetros básicos del sistema.'
-                            }
+                            { title: 'Configuración Inicial', type: 'multiple-choice', question: '¿Qué es lo primero que se debe configurar en PCC?', options: ['Los empleados', 'Los esquemas de nómina y parámetros del sistema', 'Los reportes', 'Las autorizaciones'], correct: 1, explanation: 'La configuración inicial requiere definir esquemas de nómina y parámetros básicos del sistema.' },
+                            { title: 'Variantes de Nómina', type: 'fill-blank', question: 'En PCC se configuran ______ de nómina para diferentes tipos de empleados:', placeholder: 'Configuraciones específicas...', correct: 'variantes', explanation: 'Las variantes de nómina permiten configuraciones específicas para diferentes grupos de empleados.' },
+                            { title: 'Períodos de Nómina', type: 'multiple-choice', question: '¿Cómo se definen los períodos de nómina en PCC?', options: ['Solo mensualmente', 'Se configuran según las necesidades: semanal, quincenal, mensual, etc.', 'Solo anualmente', 'Automáticamente por el sistema'], correct: 1, explanation: 'Los períodos de nómina se pueden configurar según necesidades: semanal, quincenal, mensual, etc.' },
+                            { title: 'Clusters de Nómina', type: 'multiple-choice', question: '¿Qué son los clusters en la configuración de PCC?', options: ['Grupos de empleados', 'Estructuras de datos que almacenan resultados de nómina', 'Tipos de reportes', 'Configuraciones de seguridad'], correct: 1, explanation: 'Los clusters son estructuras de datos especializadas que almacenan los resultados de los cálculos de nómina.' },
+                            { title: 'Configuración de Alertas', type: 'fill-blank', question: 'PCC permite configurar ______ automáticas para notificar sobre errores o situaciones especiales:', placeholder: 'Sistema de notificaciones...', correct: 'alertas', explanation: 'Las alertas automáticas notifican sobre errores, excepciones o situaciones que requieren atención.' },
+                            { title: 'Configuración de Workflows', type: 'multiple-choice', question: '¿Para qué se usan los workflows en PCC?', options: ['Solo para aprobaciones', 'Para automatizar procesos y rutear tareas según reglas de negocio', 'Solo para reportes', 'Para backup de datos'], correct: 1, explanation: 'Los workflows automatizan procesos y rutean tareas según reglas de negocio predefinidas.' },
+                            { title: 'Parámetros de Sistema', type: 'multiple-choice', question: '¿Qué tipo de parámetros se configuran a nivel de sistema en PCC?', options: ['Solo fechas', 'Configuraciones globales como monedas, calendarios, y reglas generales', 'Solo nombres de empleados', 'Solo códigos de nómina'], correct: 1, explanation: 'Los parámetros de sistema incluyen configuraciones globales como monedas, calendarios y reglas generales.' },
+                            { title: 'Configuración de Interfaces', type: 'fill-blank', question: 'PCC requiere configurar ______ con sistemas externos como bancos o entidades gubernamentales:', placeholder: 'Conexiones externas...', correct: 'interfaces', explanation: 'Las interfaces permiten intercambio de datos con sistemas externos como bancos y entidades gubernamentales.' }
                         ],
                         'monitoreo-pcc': [
-                            {
-                                title: 'Monitoreo en Tiempo Real',
-                                type: 'multiple-choice',
-                                question: '¿Qué permite el monitoreo en tiempo real en PCC?',
-                                options: [
-                                    'Solo ver errores pasados',
-                                    'Supervisar el progreso actual de los procesos de nómina',
-                                    'Solo generar reportes mensuales',
-                                    'Solo verificar datos de empleados'
-                                ],
-                                correct: 1,
-                                explanation: 'El monitoreo en tiempo real permite supervisar el progreso actual de todos los procesos de nómina.'
-                            }
+                            { title: 'Monitoreo en Tiempo Real', type: 'multiple-choice', question: '¿Qué permite el monitoreo en tiempo real en PCC?', options: ['Solo ver errores pasados', 'Supervisar el progreso actual de los procesos de nómina', 'Solo generar reportes mensuales', 'Solo verificar datos de empleados'], correct: 1, explanation: 'El monitoreo en tiempo real permite supervisar el progreso actual de todos los procesos de nómina.' },
+                            { title: 'Indicadores de Estado', type: 'fill-blank', question: 'PCC utiliza ______ visuales para mostrar el estado de los procesos (verde, amarillo, rojo):', placeholder: 'Sistema visual...', correct: 'indicadores', explanation: 'Los indicadores de estado usan colores (verde, amarillo, rojo) para mostrar el estado de los procesos.' },
+                            { title: 'Control de Errores', type: 'multiple-choice', question: '¿Cómo maneja PCC los errores en procesos de nómina?', options: ['Los ignora automáticamente', 'Los registra, categoriza y permite su resolución sistemática', 'Solo los reporta al final del mes', 'Los corrige automáticamente'], correct: 1, explanation: 'PCC registra, categoriza errores y proporciona herramientas para su resolución sistemática.' },
+                            { title: 'Reportes de Control', type: 'multiple-choice', question: '¿Qué tipos de reportes de control genera PCC?', options: ['Solo reportes financieros', 'Reportes de proceso, excepción, validación y estadísticos', 'Solo reportes de empleados', 'No genera reportes'], correct: 1, explanation: 'PCC genera diversos reportes: de proceso, excepción, validación y estadísticos para control completo.' },
+                            { title: 'Simulaciones de Nómina', type: 'fill-blank', question: 'PCC permite realizar ______ antes del cálculo real para detectar problemas:', placeholder: 'Procesos de prueba...', correct: 'simulaciones', explanation: 'Las simulaciones permiten probar cálculos de nómina antes de la ejecución real para detectar problemas.' },
+                            { title: 'Auditoría de Procesos', type: 'multiple-choice', question: '¿Qué información proporciona la auditoría de procesos en PCC?', options: ['Solo datos financieros', 'Rastro completo de quién, qué, cuándo y cómo se procesaron las nóminas', 'Solo errores críticos', 'Solo información de empleados'], correct: 1, explanation: 'La auditoría proporciona un rastro completo de quién, qué, cuándo y cómo se procesaron las nóminas.' },
+                            { title: 'Control de Calidad', type: 'fill-blank', question: 'PCC incluye verificaciones de ______ para asegurar la precisión de los cálculos:', placeholder: 'Verificación de precisión...', correct: 'calidad', explanation: 'Las verificaciones de calidad aseguran que los cálculos de nómina sean precisos y consistentes.' }
                         ]
                     }
-                }
+                };
+
+                return lessons;
             };
 
-            // Resto de las funciones igual que antes...
+            const lessons = createLessons();
+
+            // Resto de las funciones...
             const markLessonCompleted = (module, level, subsection, lessonIndex, isCorrect) => {
                 const key = `${module}-${level}-${subsection}`;
                 setAppState(prev => {
@@ -708,6 +632,20 @@
                         ),
                         React.createElement('div', { className: "space-y-4" },
                             Object.entries(modules).map(([key, module]) => {
+                                // Calcular progreso general del módulo
+                                const moduleSubsections = Object.keys(subsections[key] || {}).flatMap(level => 
+                                    Object.keys(subsections[key][level] || {}).map(subsection => `${key}-${level}-${subsection}`)
+                                );
+                                const moduleProgress = moduleSubsections.reduce((acc, subKey) => {
+                                    const progress = appState.moduleProgress[subKey] || { completed: 0, total: 0, score: 0 };
+                                    acc.completed += progress.completed;
+                                    acc.total += progress.total;
+                                    acc.score += progress.score;
+                                    return acc;
+                                }, { completed: 0, total: 0, score: 0 });
+                                
+                                const progressPercentage = moduleProgress.total > 0 ? Math.round((moduleProgress.completed / moduleProgress.total) * 100) : 0;
+                                
                                 return React.createElement('button', {
                                     key: key,
                                     onClick: () => {
@@ -720,7 +658,18 @@
                                             React.createElement(module.icon, { className: "w-8 h-8 text-gray-700" }),
                                             React.createElement('div', null,
                                                 React.createElement('h3', { className: "text-xl font-medium text-gray-900" }, module.title),
-                                                React.createElement('p', { className: "text-gray-600 text-sm mt-1" }, module.description)
+                                                React.createElement('p', { className: "text-gray-600 text-sm mt-1" }, module.description),
+                                                moduleProgress.total > 0 && React.createElement('div', { className: "mt-2" },
+                                                    React.createElement('div', { className: "w-32 bg-gray-200 rounded-full h-2" },
+                                                        React.createElement('div', {
+                                                            className: "bg-blue-600 h-2 rounded-full",
+                                                            style: { width: `${progressPercentage}%` }
+                                                        })
+                                                    ),
+                                                    React.createElement('p', { className: "text-xs text-gray-500 mt-1" },
+                                                        `${progressPercentage}% completado (${moduleProgress.score}/${moduleProgress.total})`
+                                                    )
+                                                )
                                             )
                                         ),
                                         React.createElement(ChevronRight, { className: "w-6 h-6 text-gray-400" })
@@ -803,6 +752,8 @@
                             Object.entries(subsections[appState.selectedModule][appState.selectedLevel]).map(([key, subsection]) => {
                                 const lessonCount = lessons[appState.selectedModule][appState.selectedLevel][key]?.length || 0;
                                 const isAvailable = lessonCount > 0;
+                                const progress = getSubsectionProgress(appState.selectedModule, appState.selectedLevel, key);
+                                const progressPercentage = progress.total > 0 ? Math.round((progress.completed / progress.total) * 100) : 0;
                                 
                                 return React.createElement('button', {
                                     key: key,
@@ -831,7 +782,18 @@
                                                 React.createElement('p', { className: "text-gray-600 text-sm mt-1" }, subsection.description),
                                                 React.createElement('p', { 
                                                     className: `text-xs mt-1 ${isAvailable ? 'text-blue-600' : 'text-gray-400'}`
-                                                }, lessonCount > 0 ? `${lessonCount} lecciones` : 'Próximamente')
+                                                }, lessonCount > 0 ? `${lessonCount} lecciones` : 'Próximamente'),
+                                                progress.total > 0 && React.createElement('div', { className: "mt-2" },
+                                                    React.createElement('div', { className: "w-32 bg-gray-200 rounded-full h-2" },
+                                                        React.createElement('div', {
+                                                            className: "bg-green-600 h-2 rounded-full",
+                                                            style: { width: `${progressPercentage}%` }
+                                                        })
+                                                    ),
+                                                    React.createElement('p', { className: "text-xs text-gray-500 mt-1" },
+                                                        `${progressPercentage}% - ${progress.score}/${progress.total} correctas`
+                                                    )
+                                                )
                                             )
                                         ),
                                         isAvailable && React.createElement(ChevronRight, { className: "w-6 h-6 text-gray-400" })
@@ -996,3 +958,4 @@
     </script>
 </body>
 </html>
+
