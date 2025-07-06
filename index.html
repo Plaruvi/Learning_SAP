@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -246,6 +247,12 @@
                             description: 'Funciones, métodos y reutilización de código',
                             icon: '🧩',
                             color: 'bg-cyan-50'
+                        },
+                        'debugging': {
+                            title: 'Debugging ABAP',
+                            description: 'Técnicas de depuración y resolución de problemas',
+                            icon: '🐛',
+                            color: 'bg-red-50'
                         }
                     },
                     advanced: {
@@ -922,6 +929,242 @@
                                 options: ['SY-TABIX', 'SY-SUBRC', 'SY-INDEX', 'SY-UNAME'],
                                 correct: 1,
                                 explanation: 'SY-SUBRC indica si la función se ejecutó correctamente (0) o hubo error.'
+                            }
+                        ],
+                        'debugging': [
+                            {
+                                title: 'Activación del Debugger',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la forma más común de activar el debugger en ABAP?',
+                                options: [
+                                    'F8',
+                                    '/H en el campo de comandos',
+                                    'Ctrl+D',
+                                    'Alt+F12'
+                                ],
+                                correct: 1,
+                                explanation: 'Escribir /H en el campo de comandos SAP activa el debugger para la siguiente acción.'
+                            },
+                            {
+                                title: 'Tipos de Debugger',
+                                type: 'multiple-choice',
+                                question: '¿Cuáles son los dos tipos principales de debugger en SAP?',
+                                options: [
+                                    'Classic y Modern',
+                                    'Classical y New',
+                                    'Old y Advanced',
+                                    'Standard y Extended'
+                                ],
+                                correct: 1,
+                                explanation: 'SAP tiene el Classical Debugger y el New Debugger (más moderno y con mejor interfaz).'
+                            },
+                            {
+                                title: 'Breakpoints de Línea',
+                                type: 'fill-blank',
+                                question: 'Para poner un breakpoint en una línea específica, haces doble clic en:',
+                                placeholder: 'Dónde haces clic...',
+                                correct: 'margen',
+                                explanation: 'Doble clic en el margen izquierdo del editor coloca un breakpoint en esa línea.'
+                            },
+                            {
+                                title: 'Comando BREAK-POINT',
+                                type: 'fill-blank',
+                                question: 'Completa el comando para insertar un breakpoint dinámico en el código:',
+                                code: `DATA: lv_valor TYPE i.\nlv_valor = 10.\n______-POINT.\nWRITE: lv_valor.`,
+                                placeholder: 'Comando...',
+                                correct: 'break',
+                                explanation: 'BREAK-POINT inserta un breakpoint hard-coded que siempre detiene la ejecución.'
+                            },
+                            {
+                                title: 'Navegación en el Debugger',
+                                type: 'multiple-choice',
+                                question: '¿Qué hace la tecla F5 en el debugger?',
+                                options: [
+                                    'Ejecuta hasta el siguiente breakpoint',
+                                    'Ejecuta paso a paso (Step Into)',
+                                    'Sale del debugger',
+                                    'Ejecuta la línea actual sin entrar en subcódigo'
+                                ],
+                                correct: 1,
+                                explanation: 'F5 ejecuta paso a paso entrando en funciones, métodos y subrutinas (Step Into).'
+                            },
+                            {
+                                title: 'Tecla F6 en Debugger',
+                                type: 'multiple-choice',
+                                question: '¿Qué hace la tecla F6 en el debugger?',
+                                options: [
+                                    'Step Into (entra en subcódigo)',
+                                    'Step Over (ejecuta sin entrar en subcódigo)',
+                                    'Continue (continúa ejecución)',
+                                    'Step Return (sale de la función actual)'
+                                ],
+                                correct: 1,
+                                explanation: 'F6 ejecuta la línea actual sin entrar en funciones o métodos (Step Over).'
+                            },
+                            {
+                                title: 'Tecla F7 en Debugger',
+                                type: 'fill-blank',
+                                question: 'La tecla F7 se usa para hacer ______ Return:',
+                                placeholder: 'Tipo de acción...',
+                                correct: 'step',
+                                explanation: 'F7 es Step Return, sale de la función/método actual y regresa al código que lo llamó.'
+                            },
+                            {
+                                title: 'Tecla F8 en Debugger',
+                                type: 'multiple-choice',
+                                question: '¿Qué hace la tecla F8 en el debugger?',
+                                options: [
+                                    'Step Into',
+                                    'Step Over', 
+                                    'Continue (continúa hasta el siguiente breakpoint)',
+                                    'Termina el programa'
+                                ],
+                                correct: 2,
+                                explanation: 'F8 continúa la ejecución normal hasta encontrar el siguiente breakpoint.'
+                            },
+                            {
+                                title: 'Watchpoints',
+                                type: 'multiple-choice',
+                                question: '¿Para qué se usan los Watchpoints en debugging?',
+                                options: [
+                                    'Para medir el tiempo de ejecución',
+                                    'Para monitorear cambios en variables específicas',
+                                    'Para ver el call stack',
+                                    'Para analizar memoria'
+                                ],
+                                correct: 1,
+                                explanation: 'Los Watchpoints detienen la ejecución cuando una variable específica cambia de valor.'
+                            },
+                            {
+                                title: 'Breakpoints Condicionales',
+                                type: 'fill-blank',
+                                question: 'Los breakpoints condicionales se ejecutan solo cuando se cumple una ______:',
+                                placeholder: 'Qué se debe cumplir...',
+                                correct: 'condicion',
+                                explanation: 'Los breakpoints condicionales solo se activan cuando se cumple la condición especificada.'
+                            },
+                            {
+                                title: 'Variable del Sistema en Debug',
+                                type: 'multiple-choice',
+                                question: '¿Qué variable del sistema indica el usuario actual durante debugging?',
+                                options: ['SY-INDEX', 'SY-TABIX', 'SY-UNAME', 'SY-DATUM'],
+                                correct: 2,
+                                explanation: 'SY-UNAME contiene el nombre del usuario que está ejecutando el programa.'
+                            },
+                            {
+                                title: 'Call Stack',
+                                type: 'multiple-choice',
+                                question: '¿Qué información muestra el Call Stack en el debugger?',
+                                options: [
+                                    'Las variables del programa',
+                                    'La secuencia de llamadas de programas/métodos',
+                                    'Los breakpoints activos',
+                                    'El contenido de las tablas internas'
+                                ],
+                                correct: 1,
+                                explanation: 'El Call Stack muestra la secuencia de llamadas que llevaron al punto actual de ejecución.'
+                            },
+                            {
+                                title: 'Debugging de Tablas Internas',
+                                type: 'fill-blank',
+                                question: 'Para ver el contenido de una tabla interna en el debugger, haces doble clic en el ______:',
+                                placeholder: 'Qué elemento...',
+                                correct: 'nombre',
+                                explanation: 'Doble clic en el nombre de la tabla interna abre una ventana que muestra todos sus registros.'
+                            },
+                            {
+                                title: 'Debugging en Background',
+                                type: 'multiple-choice',
+                                question: '¿Cómo puedes debuggear un job que se ejecuta en background?',
+                                options: [
+                                    'No es posible',
+                                    'Usando JDBG en SM37',
+                                    'Solo con BREAK-POINT hard-coded',
+                                    'Cambiando el job a foreground'
+                                ],
+                                correct: 1,
+                                explanation: 'En SM37 puedes usar la opción JDBG para debuggear jobs en background.'
+                            },
+                            {
+                                title: 'Debugging de Código Dinámico',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la mejor práctica para debuggear código generado dinámicamente?',
+                                options: [
+                                    'No se puede debuggear',
+                                    'Usar BREAK-POINT en el código generado',
+                                    'Solo usar WRITE statements',
+                                    'Usar SE80 exclusivamente'
+                                ],
+                                correct: 1,
+                                explanation: 'Para código dinámico, la mejor opción es insertar BREAK-POINT en el código generado.'
+                            },
+                            {
+                                title: 'Transacción para Breakpoints',
+                                type: 'fill-blank',
+                                question: 'La transacción ______ se usa para gestionar breakpoints externos:',
+                                placeholder: 'Código de transacción...',
+                                correct: 'saab',
+                                explanation: 'SAAB permite gestionar breakpoints externos y configurar usuarios para debugging.'
+                            },
+                            {
+                                title: 'Debugging de ALV',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la mejor forma de debuggear eventos en ALV?',
+                                options: [
+                                    'Poner breakpoints en el evento correspondiente',
+                                    'Usar solo WRITE statements',
+                                    'No es posible debuggear ALV',
+                                    'Usar SE11 para ver los datos'
+                                ],
+                                correct: 0,
+                                explanation: 'Puedes poner breakpoints en los event handlers de ALV para debuggear la lógica de eventos.'
+                            },
+                            {
+                                title: 'Debugging de RFC',
+                                type: 'multiple-choice',
+                                question: '¿Cómo debuggeas una función RFC que se ejecuta en otro sistema?',
+                                options: [
+                                    'No es posible',
+                                    'Solo con logs',
+                                    'Usando debugging externo/remoto',
+                                    'Cambiando la función a local'
+                                ],
+                                correct: 2,
+                                explanation: 'El debugging remoto permite debuggear funciones RFC que se ejecutan en otros sistemas SAP.'
+                            },
+                            {
+                                title: 'Memory Inspector',
+                                type: 'fill-blank',
+                                question: 'El Memory Inspector en el New Debugger se usa para analizar el uso de ______:',
+                                placeholder: 'Qué se analiza...',
+                                correct: 'memoria',
+                                explanation: 'El Memory Inspector permite analizar el consumo de memoria durante la ejecución del programa.'
+                            },
+                            {
+                                title: 'Debugging de Eventos',
+                                type: 'multiple-choice',
+                                question: '¿En qué eventos de programa ABAP puedes poner breakpoints?',
+                                options: [
+                                    'Solo en START-OF-SELECTION',
+                                    'En todos los eventos (INITIALIZATION, START-OF-SELECTION, etc.)',
+                                    'Solo en AT SELECTION-SCREEN',
+                                    'Solo en END-OF-SELECTION'
+                                ],
+                                correct: 1,
+                                explanation: 'Puedes poner breakpoints en cualquier evento ABAP: INITIALIZATION, AT SELECTION-SCREEN, START-OF-SELECTION, etc.'
+                            },
+                            {
+                                title: 'Debugging vs Logging',
+                                type: 'multiple-choice',
+                                question: '¿Cuándo es mejor usar logging en lugar de debugging?',
+                                options: [
+                                    'Nunca, debugging es siempre mejor',
+                                    'Para análisis en producción y problemas intermitentes',
+                                    'Solo para errores críticos',
+                                    'Solo en desarrollo'
+                                ],
+                                correct: 1,
+                                explanation: 'El logging es mejor para producción y problemas intermitentes, ya que no interrumpe la ejecución.'
                             }
                         ]
                     },
@@ -1777,3 +2020,4 @@
     </script>
 </body>
 </html>
+Claude
