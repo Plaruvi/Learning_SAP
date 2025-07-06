@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SAP Learning - Aprende SAP de forma interactiva</title>
-    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.22.5/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -16,25 +16,131 @@
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
         }
+        .loading {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-size: 24px;
+            color: #666;
+        }
     </style>
 </head>
 <body>
-    <div id="root"></div>
+    <div id="root">
+        <div class="loading">Cargando SAP Learning...</div>
+    </div>
 
     <script type="text/babel">
         const { useState, useEffect } = React;
-        const { ChevronRight, ChevronLeft, Check, X, Play, BookOpen, Code, Award, Target, Database, Layers } = lucide;
+        
+        // Iconos de Lucide
+        const ChevronRight = (props) => React.createElement('svg', {
+            ...props,
+            width: props.size || 24,
+            height: props.size || 24,
+            viewBox: '0 0 24 24',
+            fill: 'none',
+            stroke: 'currentColor',
+            strokeWidth: '2',
+            strokeLinecap: 'round',
+            strokeLinejoin: 'round'
+        }, React.createElement('polyline', { points: '9,18 15,12 9,6' }));
+
+        const ChevronLeft = (props) => React.createElement('svg', {
+            ...props,
+            width: props.size || 24,
+            height: props.size || 24,
+            viewBox: '0 0 24 24',
+            fill: 'none',
+            stroke: 'currentColor',
+            strokeWidth: '2',
+            strokeLinecap: 'round',
+            strokeLinejoin: 'round'
+        }, React.createElement('polyline', { points: '15,18 9,12 15,6' }));
+
+        const Check = (props) => React.createElement('svg', {
+            ...props,
+            width: props.size || 24,
+            height: props.size || 24,
+            viewBox: '0 0 24 24',
+            fill: 'none',
+            stroke: 'currentColor',
+            strokeWidth: '2',
+            strokeLinecap: 'round',
+            strokeLinejoin: 'round'
+        }, React.createElement('polyline', { points: '20,6 9,17 4,12' }));
+
+        const X = (props) => React.createElement('svg', {
+            ...props,
+            width: props.size || 24,
+            height: props.size || 24,
+            viewBox: '0 0 24 24',
+            fill: 'none',
+            stroke: 'currentColor',
+            strokeWidth: '2',
+            strokeLinecap: 'round',
+            strokeLinejoin: 'round'
+        }, React.createElement('line', { x1: '18', y1: '6', x2: '6', y2: '18' }), React.createElement('line', { x1: '6', y1: '6', x2: '18', y2: '18' }));
+
+        const BookOpen = (props) => React.createElement('svg', {
+            ...props,
+            width: props.size || 24,
+            height: props.size || 24,
+            viewBox: '0 0 24 24',
+            fill: 'none',
+            stroke: 'currentColor',
+            strokeWidth: '2',
+            strokeLinecap: 'round',
+            strokeLinejoin: 'round'
+        }, React.createElement('path', { d: 'M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z' }), React.createElement('path', { d: 'M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z' }));
+
+        const Code = (props) => React.createElement('svg', {
+            ...props,
+            width: props.size || 24,
+            height: props.size || 24,
+            viewBox: '0 0 24 24',
+            fill: 'none',
+            stroke: 'currentColor',
+            strokeWidth: '2',
+            strokeLinecap: 'round',
+            strokeLinejoin: 'round'
+        }, React.createElement('polyline', { points: '16,18 22,12 16,6' }), React.createElement('polyline', { points: '8,6 2,12 8,18' }));
+
+        const Database = (props) => React.createElement('svg', {
+            ...props,
+            width: props.size || 24,
+            height: props.size || 24,
+            viewBox: '0 0 24 24',
+            fill: 'none',
+            stroke: 'currentColor',
+            strokeWidth: '2',
+            strokeLinecap: 'round',
+            strokeLinejoin: 'round'
+        }, React.createElement('ellipse', { cx: '12', cy: '5', rx: '9', ry: '3' }), React.createElement('path', { d: 'M21 12c0 1.66-4 3-9 3s-9-1.34-9-3' }), React.createElement('path', { d: 'M3 5v14c0 1.66 4 3 9 3s9-1.34 9-3V5' }));
+
+        const Award = (props) => React.createElement('svg', {
+            ...props,
+            width: props.size || 24,
+            height: props.size || 24,
+            viewBox: '0 0 24 24',
+            fill: 'none',
+            stroke: 'currentColor',
+            strokeWidth: '2',
+            strokeLinecap: 'round',
+            strokeLinejoin: 'round'
+        }, React.createElement('circle', { cx: '12', cy: '8', r: '7' }), React.createElement('polyline', { points: '8.21,13.89 7,23 12,20 17,23 15.79,13.88' }));
 
         const SAPLearningApp = () => {
             // Estado inicial desde localStorage
             const getInitialState = () => {
-                const saved = localStorage.getItem('sapLearningProgress');
-                if (saved) {
-                    try {
+                try {
+                    const saved = localStorage.getItem('sapLearningProgress');
+                    if (saved) {
                         return JSON.parse(saved);
-                    } catch (e) {
-                        console.error('Error parsing saved data:', e);
                     }
+                } catch (e) {
+                    console.error('Error parsing saved data:', e);
                 }
                 return {
                     currentScreen: 'home',
@@ -50,76 +156,24 @@
 
             const [appState, setAppState] = useState(getInitialState());
             const [userAnswer, setUserAnswer] = useState('');
-            const [selectedAnswers, setSelectedAnswers] = useState([]);
             const [showResult, setShowResult] = useState(false);
             const [isCorrect, setIsCorrect] = useState(false);
 
-            // Guardar progreso en localStorage cada vez que cambie el estado
+            // Guardar progreso en localStorage
             useEffect(() => {
-                localStorage.setItem('sapLearningProgress', JSON.stringify(appState));
+                try {
+                    localStorage.setItem('sapLearningProgress', JSON.stringify(appState));
+                } catch (e) {
+                    console.error('Error saving progress:', e);
+                }
             }, [appState]);
 
-            // Función helper para actualizar estado
+            // Función para actualizar estado
             const updateAppState = (updates) => {
                 setAppState(prev => ({ ...prev, ...updates }));
             };
 
-            // Función para marcar lección como completada
-            const markLessonCompleted = (module, level, subsection, lessonIndex, isCorrect) => {
-                const key = `${module}-${level}-${subsection}`;
-                setAppState(prev => {
-                    const newCompletedLessons = { ...prev.completedLessons };
-                    const newModuleProgress = { ...prev.moduleProgress };
-
-                    if (!newCompletedLessons[key]) {
-                        newCompletedLessons[key] = {};
-                    }
-                    newCompletedLessons[key][lessonIndex] = isCorrect;
-
-                    // Calcular progreso del módulo
-                    if (!newModuleProgress[key]) {
-                        newModuleProgress[key] = { completed: 0, total: 0, score: 0 };
-                    }
-                    
-                    const totalLessons = lessons[module][level][subsection].length;
-                    const completedCount = Object.keys(newCompletedLessons[key]).length;
-                    const correctCount = Object.values(newCompletedLessons[key]).filter(Boolean).length;
-                    
-                    newModuleProgress[key] = {
-                        completed: completedCount,
-                        total: totalLessons,
-                        score: correctCount
-                    };
-
-                    return {
-                        ...prev,
-                        completedLessons: newCompletedLessons,
-                        moduleProgress: newModuleProgress
-                    };
-                });
-            };
-
-            // Función para obtener progreso de una subsección
-            const getSubsectionProgress = (module, level, subsection) => {
-                const key = `${module}-${level}-${subsection}`;
-                return appState.moduleProgress[key] || { completed: 0, total: 0, score: 0 };
-            };
-
-            // Función para resetear progreso
-            const resetProgress = () => {
-                localStorage.removeItem('sapLearningProgress');
-                setAppState({
-                    currentScreen: 'home',
-                    selectedModule: null,
-                    selectedLevel: null,
-                    selectedSubsection: null,
-                    currentLesson: 0,
-                    score: 0,
-                    completedLessons: {},
-                    moduleProgress: {}
-                });
-            };
-
+            // Datos de la aplicación
             const modules = {
                 abap: {
                     title: 'ABAP',
@@ -167,46 +221,6 @@
                             description: 'IF, CASE, WHILE, bucles y condiciones',
                             icon: '🔄',
                             color: 'bg-purple-50'
-                        },
-                        'tablas-internas': {
-                            title: 'Tablas Internas',
-                            description: 'Declaración, manipulación y procesamiento',
-                            icon: '📊',
-                            color: 'bg-indigo-50'
-                        }
-                    },
-                    intermediate: {
-                        'abap-oo': {
-                            title: 'ABAP Orientado a Objetos',
-                            description: 'Clases, objetos, herencia e interfaces',
-                            icon: '🏗️',
-                            color: 'bg-emerald-50'
-                        },
-                        'field-symbols': {
-                            title: 'Field Symbols',
-                            description: 'Punteros, asignaciones dinámicas y performance',
-                            icon: '🎯',
-                            color: 'bg-orange-50'
-                        },
-                        'modularizacion': {
-                            title: 'Modularización',
-                            description: 'Funciones, métodos y reutilización de código',
-                            icon: '🧩',
-                            color: 'bg-cyan-50'
-                        }
-                    },
-                    advanced: {
-                        'patrones-diseno': {
-                            title: 'Patrones de Diseño',
-                            description: 'Factory, Singleton, Observer y más',
-                            icon: '⚙️',
-                            color: 'bg-rose-50'
-                        },
-                        'performance': {
-                            title: 'Optimización Performance',
-                            description: 'SQL eficiente, índices y mejores prácticas',
-                            icon: '⚡',
-                            color: 'bg-yellow-50'
                         }
                     }
                 },
@@ -217,28 +231,6 @@
                             description: 'Qué son los esquemas, tipos y estructura',
                             icon: '📋',
                             color: 'bg-green-50'
-                        },
-                        'configuracion': {
-                            title: 'Configuración Básica',
-                            description: 'Creación y asignación de esquemas',
-                            icon: '⚙️',
-                            color: 'bg-teal-50'
-                        }
-                    },
-                    intermediate: {
-                        'esquemas-avanzados': {
-                            title: 'Esquemas Avanzados',
-                            description: 'Validaciones, sustituciones y debugging',
-                            icon: '🔧',
-                            color: 'bg-lime-50'
-                        }
-                    },
-                    advanced: {
-                        'optimizacion': {
-                            title: 'Optimización',
-                            description: 'Performance, mejores prácticas y troubleshooting',
-                            icon: '🚀',
-                            color: 'bg-emerald-50'
                         }
                     }
                 }
@@ -292,88 +284,6 @@
                                 correct: 1,
                                 explanation: 'En ABAP se usa la palabra "AND" para el operador lógico Y.'
                             }
-                        ],
-                        'tablas-internas': [
-                            {
-                                title: 'Declaración de Tabla Interna',
-                                type: 'fill-blank',
-                                question: 'Declara una tabla interna de tipo estándar:',
-                                code: `DATA: lt_empleados TYPE ______ TABLE OF ty_empleado.`,
-                                placeholder: 'Tipo de tabla...',
-                                correct: 'standard',
-                                explanation: 'STANDARD TABLE es el tipo más común de tabla interna en ABAP.'
-                            }
-                        ]
-                    },
-                    intermediate: {
-                        'abap-oo': [
-                            {
-                                title: 'Definición de Clase',
-                                type: 'fill-blank',
-                                question: 'Completa la definición de una clase:',
-                                code: `______ lcl_empleado DEFINITION.\n  PUBLIC SECTION.\n    DATA: mv_nombre TYPE string.\n  PRIVATE SECTION.\n    DATA: mv_salario TYPE p.\n______.`,
-                                placeholder: 'Palabras clave...',
-                                correct: ['class', 'endclass'],
-                                explanation: 'Las clases se definen con CLASS...ENDCLASS en ABAP.'
-                            }
-                        ],
-                        'field-symbols': [
-                            {
-                                title: 'Declaración de Field Symbol',
-                                type: 'fill-blank',
-                                question: 'Declara un field symbol:',
-                                code: `______-SYMBOLS: <fs_empleado> TYPE ty_empleado.`,
-                                placeholder: 'Palabra clave...',
-                                correct: 'field',
-                                explanation: 'FIELD-SYMBOLS declara un field symbol que actúa como puntero.'
-                            }
-                        ],
-                        'modularizacion': [
-                            {
-                                title: 'Módulos de Función',
-                                type: 'multiple-choice',
-                                question: '¿Cuál es la principal ventaja de los módulos de función?',
-                                options: [
-                                    'Son más rápidos',
-                                    'Permiten reutilización de código',
-                                    'Ocupan menos memoria',
-                                    'Son más seguros'
-                                ],
-                                correct: 1,
-                                explanation: 'Los módulos de función permiten reutilizar código y centralizar lógica común.'
-                            }
-                        ]
-                    },
-                    advanced: {
-                        'patrones-diseno': [
-                            {
-                                title: 'Factory Pattern',
-                                type: 'multiple-choice',
-                                question: '¿Cuál es el beneficio principal del patrón Factory?',
-                                options: [
-                                    'Mejora el rendimiento',
-                                    'Centraliza la creación de objetos',
-                                    'Reduce el uso de memoria',
-                                    'Simplifica la herencia'
-                                ],
-                                correct: 1,
-                                explanation: 'El patrón Factory centraliza y controla la creación de objetos.'
-                            }
-                        ],
-                        'performance': [
-                            {
-                                title: 'Optimización SQL',
-                                type: 'multiple-choice',
-                                question: '¿Cuál es la mejor práctica para consultas SQL en ABAP?',
-                                options: [
-                                    'Usar SELECT *',
-                                    'Usar SELECT con campos específicos',
-                                    'Usar múltiples SELECT individuales',
-                                    'Evitar WHERE clause'
-                                ],
-                                correct: 1,
-                                explanation: 'SELECT con campos específicos reduce transferencia de datos y mejora rendimiento.'
-                            }
                         ]
                     }
                 },
@@ -406,55 +316,69 @@
                                 correct: 0,
                                 explanation: 'Los tres tipos principales son: Esquemas de Cálculo, Esquemas de Validación y Esquemas de Sustitución.'
                             }
-                        ],
-                        'configuracion': [
-                            {
-                                title: 'Creación de Esquemas',
-                                type: 'multiple-choice',
-                                question: '¿En qué herramienta se crean los esquemas SAP?',
-                                options: [
-                                    'SE80',
-                                    'SPRO (IMG)',
-                                    'SE11',
-                                    'SM30'
-                                ],
-                                correct: 1,
-                                explanation: 'Los esquemas se crean y configuran en SPRO (Implementation Guide).'
-                            }
-                        ]
-                    },
-                    intermediate: {
-                        'esquemas-avanzados': [
-                            {
-                                title: 'Configuración de Esquemas',
-                                type: 'multiple-choice',
-                                question: '¿En qué transacción se configuran los esquemas de contabilización automática?',
-                                options: ['OB41', 'OBX1', 'OBYC', 'OBA1'],
-                                correct: 0,
-                                explanation: 'OB41 es la transacción para configurar esquemas de contabilización automática en SAP.'
-                            }
-                        ]
-                    },
-                    advanced: {
-                        'optimizacion': [
-                            {
-                                title: 'Esquemas Complejos',
-                                type: 'multiple-choice',
-                                question: '¿Cuál es la mejor práctica para esquemas con muchos pasos?',
-                                options: [
-                                    'Usar un solo esquema grande',
-                                    'Dividir en múltiples esquemas más pequeños',
-                                    'Evitar usar esquemas',
-                                    'Usar solo validaciones manuales'
-                                ],
-                                correct: 1,
-                                explanation: 'Es mejor dividir esquemas complejos en múltiples esquemas más pequeños y manejables.'
-                            }
                         ]
                     }
                 }
             };
 
+            // Funciones para manejar progreso
+            const markLessonCompleted = (module, level, subsection, lessonIndex, isCorrect) => {
+                const key = `${module}-${level}-${subsection}`;
+                setAppState(prev => {
+                    const newCompletedLessons = { ...prev.completedLessons };
+                    const newModuleProgress = { ...prev.moduleProgress };
+
+                    if (!newCompletedLessons[key]) {
+                        newCompletedLessons[key] = {};
+                    }
+                    newCompletedLessons[key][lessonIndex] = isCorrect;
+
+                    if (!newModuleProgress[key]) {
+                        newModuleProgress[key] = { completed: 0, total: 0, score: 0 };
+                    }
+                    
+                    const totalLessons = lessons[module][level][subsection].length;
+                    const completedCount = Object.keys(newCompletedLessons[key]).length;
+                    const correctCount = Object.values(newCompletedLessons[key]).filter(Boolean).length;
+                    
+                    newModuleProgress[key] = {
+                        completed: completedCount,
+                        total: totalLessons,
+                        score: correctCount
+                    };
+
+                    return {
+                        ...prev,
+                        completedLessons: newCompletedLessons,
+                        moduleProgress: newModuleProgress
+                    };
+                });
+            };
+
+            const getSubsectionProgress = (module, level, subsection) => {
+                const key = `${module}-${level}-${subsection}`;
+                return appState.moduleProgress[key] || { completed: 0, total: 0, score: 0 };
+            };
+
+            const resetProgress = () => {
+                try {
+                    localStorage.removeItem('sapLearningProgress');
+                    setAppState({
+                        currentScreen: 'home',
+                        selectedModule: null,
+                        selectedLevel: null,
+                        selectedSubsection: null,
+                        currentLesson: 0,
+                        score: 0,
+                        completedLessons: {},
+                        moduleProgress: {}
+                    });
+                } catch (e) {
+                    console.error('Error resetting progress:', e);
+                }
+            };
+
+            // Funciones para manejar respuestas
             const checkAnswer = (answer) => {
                 const currentLessonData = lessons[appState.selectedModule][appState.selectedLevel][appState.selectedSubsection][appState.currentLesson];
                 let correct = false;
@@ -463,20 +387,12 @@
                     correct = answer === currentLessonData.correct;
                 } else if (currentLessonData.type === 'fill-blank') {
                     const userAnswerLower = answer.toLowerCase().trim();
-                    
-                    if (Array.isArray(currentLessonData.correct)) {
-                        correct = currentLessonData.correct.every(correctAnswer => 
-                            userAnswerLower.includes(correctAnswer.toLowerCase())
-                        );
-                    } else {
-                        correct = userAnswerLower === currentLessonData.correct.toLowerCase();
-                    }
+                    correct = userAnswerLower === currentLessonData.correct.toLowerCase();
                 }
 
                 setIsCorrect(correct);
                 setShowResult(true);
                 
-                // Marcar lección como completada y actualizar progreso
                 markLessonCompleted(appState.selectedModule, appState.selectedLevel, appState.selectedSubsection, appState.currentLesson, correct);
                 
                 if (correct) {
@@ -497,7 +413,6 @@
             const nextLesson = () => {
                 setShowResult(false);
                 setUserAnswer('');
-                setSelectedAnswers([]);
                 setIsCorrect(false);
                 
                 if (appState.currentLesson < lessons[appState.selectedModule][appState.selectedLevel][appState.selectedSubsection].length - 1) {
@@ -518,7 +433,7 @@
                 });
             };
 
-            // Pantalla principal
+            // Renderizado de pantallas
             if (appState.currentScreen === 'home') {
                 return React.createElement('div', { className: "min-h-screen bg-gray-50 p-4" },
                     React.createElement('div', { className: "max-w-md mx-auto" },
@@ -537,20 +452,6 @@
                         ),
                         React.createElement('div', { className: "space-y-4" },
                             Object.entries(modules).map(([key, module]) => {
-                                // Calcular progreso general del módulo
-                                const moduleSubsections = Object.keys(subsections[key] || {}).flatMap(level => 
-                                    Object.keys(subsections[key][level] || {}).map(subsection => `${key}-${level}-${subsection}`)
-                                );
-                                const moduleProgress = moduleSubsections.reduce((acc, subKey) => {
-                                    const progress = appState.moduleProgress[subKey] || { completed: 0, total: 0, score: 0 };
-                                    acc.completed += progress.completed;
-                                    acc.total += progress.total;
-                                    acc.score += progress.score;
-                                    return acc;
-                                }, { completed: 0, total: 0, score: 0 });
-                                
-                                const progressPercentage = moduleProgress.total > 0 ? Math.round((moduleProgress.completed / moduleProgress.total) * 100) : 0;
-                                
                                 return React.createElement('button', {
                                     key: key,
                                     onClick: () => {
@@ -563,18 +464,7 @@
                                             React.createElement(module.icon, { className: "w-8 h-8 text-gray-700" }),
                                             React.createElement('div', null,
                                                 React.createElement('h3', { className: "text-xl font-medium text-gray-900" }, module.title),
-                                                React.createElement('p', { className: "text-gray-600 text-sm mt-1" }, module.description),
-                                                moduleProgress.total > 0 && React.createElement('div', { className: "mt-2" },
-                                                    React.createElement('div', { className: "w-32 bg-gray-200 rounded-full h-2" },
-                                                        React.createElement('div', {
-                                                            className: "bg-blue-600 h-2 rounded-full",
-                                                            style: { width: `${progressPercentage}%` }
-                                                        })
-                                                    ),
-                                                    React.createElement('p', { className: "text-xs text-gray-500 mt-1" },
-                                                        `${progressPercentage}% completado (${moduleProgress.score}/${moduleProgress.total})`
-                                                    )
-                                                )
+                                                React.createElement('p', { className: "text-gray-600 text-sm mt-1" }, module.description)
                                             )
                                         ),
                                         React.createElement(ChevronRight, { className: "w-6 h-6 text-gray-400" })
@@ -586,7 +476,6 @@
                 );
             }
 
-            // Pantalla de niveles
             if (appState.currentScreen === 'levels') {
                 return React.createElement('div', { className: "min-h-screen bg-gray-50 p-4" },
                     React.createElement('div', { className: "max-w-md mx-auto" },
@@ -640,7 +529,6 @@
                 );
             }
 
-            // Pantalla de subsecciones
             if (appState.currentScreen === 'subsections') {
                 return React.createElement('div', { className: "min-h-screen bg-gray-50 p-4" },
                     React.createElement('div', { className: "max-w-md mx-auto" },
@@ -712,7 +600,6 @@
                 );
             }
 
-            // Pantalla de lección
             if (appState.currentScreen === 'lesson') {
                 const currentLessonData = lessons[appState.selectedModule][appState.selectedLevel][appState.selectedSubsection][appState.currentLesson];
                 const totalLessons = lessons[appState.selectedModule][appState.selectedLevel][appState.selectedSubsection].length;
@@ -821,7 +708,6 @@
                 );
             }
 
-            // Pantalla de completado
             if (appState.currentScreen === 'completed') {
                 const totalLessons = lessons[appState.selectedModule][appState.selectedLevel][appState.selectedSubsection].length;
                 const percentage = Math.round((appState.score / totalLessons) * 100);
@@ -858,6 +744,8 @@
                     )
                 );
             }
+
+            return React.createElement('div', { className: "loading" }, 'Cargando...');
         };
 
         // Renderizar la aplicación
