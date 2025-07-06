@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="es">
 <head>
@@ -8,7 +7,6 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react/18.2.0/umd/react.development.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/18.2.0/umd/react-dom.development.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-standalone/7.22.5/babel.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.263.1/umd/lucide.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         body {
@@ -35,7 +33,7 @@
     <script type="text/babel">
         const { useState, useEffect } = React;
         
-        // Iconos de Lucide
+        // Iconos simplificados
         const ChevronRight = (props) => React.createElement('svg', {
             ...props,
             width: props.size || 24,
@@ -174,7 +172,7 @@
                 setAppState(prev => ({ ...prev, ...updates }));
             };
 
-            // Datos de la aplicación
+            // Datos de la aplicación - TODOS LOS DATOS ORIGINALES
             const modules = {
                 abap: {
                     title: 'ABAP',
@@ -222,6 +220,46 @@
                             description: 'IF, CASE, WHILE, bucles y condiciones',
                             icon: '🔄',
                             color: 'bg-purple-50'
+                        },
+                        'tablas-internas': {
+                            title: 'Tablas Internas',
+                            description: 'Declaración, manipulación y procesamiento',
+                            icon: '📊',
+                            color: 'bg-indigo-50'
+                        }
+                    },
+                    intermediate: {
+                        'abap-oo': {
+                            title: 'ABAP Orientado a Objetos',
+                            description: 'Clases, objetos, herencia e interfaces',
+                            icon: '🏗️',
+                            color: 'bg-emerald-50'
+                        },
+                        'field-symbols': {
+                            title: 'Field Symbols',
+                            description: 'Punteros, asignaciones dinámicas y performance',
+                            icon: '🎯',
+                            color: 'bg-orange-50'
+                        },
+                        'modularizacion': {
+                            title: 'Modularización',
+                            description: 'Funciones, métodos y reutilización de código',
+                            icon: '🧩',
+                            color: 'bg-cyan-50'
+                        }
+                    },
+                    advanced: {
+                        'patrones-diseno': {
+                            title: 'Patrones de Diseño',
+                            description: 'Factory, Singleton, Observer y más',
+                            icon: '⚙️',
+                            color: 'bg-rose-50'
+                        },
+                        'performance': {
+                            title: 'Optimización Performance',
+                            description: 'SQL eficiente, índices y mejores prácticas',
+                            icon: '⚡',
+                            color: 'bg-yellow-50'
                         }
                     }
                 },
@@ -232,11 +270,34 @@
                             description: 'Qué son los esquemas, tipos y estructura',
                             icon: '📋',
                             color: 'bg-green-50'
+                        },
+                        'configuracion': {
+                            title: 'Configuración Básica',
+                            description: 'Creación y asignación de esquemas',
+                            icon: '⚙️',
+                            color: 'bg-teal-50'
+                        }
+                    },
+                    intermediate: {
+                        'esquemas-avanzados': {
+                            title: 'Esquemas Avanzados',
+                            description: 'Validaciones, sustituciones y debugging',
+                            icon: '🔧',
+                            color: 'bg-lime-50'
+                        }
+                    },
+                    advanced: {
+                        'optimizacion': {
+                            title: 'Optimización',
+                            description: 'Performance, mejores prácticas y troubleshooting',
+                            icon: '🚀',
+                            color: 'bg-emerald-50'
                         }
                     }
                 }
             };
 
+            // TODAS LAS LECCIONES COMPLETAS DEL ARCHIVO ORIGINAL
             const lessons = {
                 abap: {
                     beginner: {
@@ -265,6 +326,80 @@
                                 options: ['I', 'F', 'P', 'STRING'],
                                 correct: 2,
                                 explanation: 'El tipo "P" (Packed) es ideal para números decimales y cálculos monetarios.'
+                            },
+                            {
+                                title: 'Longitud de Campos',
+                                type: 'fill-blank',
+                                question: 'Declara un campo de tipo caracter con longitud 10:',
+                                code: `DATA: lv_codigo TYPE C LENGTH ______.`,
+                                placeholder: 'Número...',
+                                correct: '10',
+                                explanation: 'LENGTH especifica la longitud del campo de tipo caracter.'
+                            },
+                            {
+                                title: 'Constantes',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la forma correcta de declarar una constante en ABAP?',
+                                options: [
+                                    "DATA: lc_max TYPE i VALUE 100",
+                                    "CONSTANTS: lc_max TYPE i VALUE 100",
+                                    "CONST: lc_max TYPE i VALUE 100",
+                                    "STATIC: lc_max TYPE i VALUE 100"
+                                ],
+                                correct: 1,
+                                explanation: 'CONSTANTS es la palabra clave para declarar constantes en ABAP.'
+                            },
+                            {
+                                title: 'Asignación de Variables',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la forma correcta de asignar un valor a una variable en ABAP?',
+                                options: [
+                                    'lv_variable := valor',
+                                    'lv_variable = valor',
+                                    'SET lv_variable = valor',
+                                    'lv_variable == valor'
+                                ],
+                                correct: 1,
+                                explanation: 'En ABAP se usa el signo igual (=) para asignación de valores.'
+                            },
+                            {
+                                title: 'Operadores Aritméticos',
+                                type: 'fill-blank',
+                                question: 'Completa la operación para calcular el resto de una división:',
+                                code: `lv_resultado = lv_numero ______ 3.`,
+                                placeholder: 'Operador...',
+                                correct: 'mod',
+                                explanation: 'MOD es el operador para calcular el resto de una división.'
+                            },
+                            {
+                                title: 'Instrucción WRITE',
+                                type: 'fill-blank',
+                                question: 'Completa la instrucción para mostrar texto:',
+                                code: `______: 'Hola Mundo'.`,
+                                placeholder: 'Instrucción...',
+                                correct: 'write',
+                                explanation: 'WRITE es la instrucción básica para mostrar texto en ABAP.'
+                            },
+                            {
+                                title: 'Conversión de Tipos',
+                                type: 'multiple-choice',
+                                question: '¿Qué función usarías para convertir un número a string?',
+                                options: ['CONVERT', 'CAST', 'MOVE', 'Asignación directa'],
+                                correct: 3,
+                                explanation: 'En ABAP la conversión de tipos se hace automáticamente con asignación directa.'
+                            },
+                            {
+                                title: 'Comentarios en ABAP',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la forma correcta de escribir un comentario en ABAP?',
+                                options: [
+                                    '// Este es un comentario',
+                                    '/* Este es un comentario */',
+                                    '" Este es un comentario',
+                                    '# Este es un comentario'
+                                ],
+                                correct: 2,
+                                explanation: 'En ABAP se usa el símbolo " (comillas dobles) para comentarios.'
                             }
                         ],
                         'estructuras-control': [
@@ -284,6 +419,558 @@
                                 options: ['&&', 'AND', '&', 'Y'],
                                 correct: 1,
                                 explanation: 'En ABAP se usa la palabra "AND" para el operador lógico Y.'
+                            },
+                            {
+                                title: 'Operador OR',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es el operador lógico OR en ABAP?',
+                                options: ['||', 'OR', '|', 'O'],
+                                correct: 1,
+                                explanation: 'En ABAP se usa la palabra "OR" para el operador lógico O.'
+                            },
+                            {
+                                title: 'Operador NOT',
+                                type: 'fill-blank',
+                                question: 'Completa la condición negativa:',
+                                code: `IF ______ lv_activo = 'X'.\n  WRITE: 'Usuario inactivo'.\nENDIF.`,
+                                placeholder: 'Operador...',
+                                correct: 'not',
+                                explanation: 'NOT es el operador de negación en ABAP.'
+                            },
+                            {
+                                title: 'Estructura CASE-WHEN',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la estructura correcta para múltiples condiciones?',
+                                options: [
+                                    'SWITCH-CASE-ENDSWITCH',
+                                    'CASE-WHEN-ENDCASE',
+                                    'SELECT-CASE-ENDSELECT',
+                                    'MATCH-CASE-ENDMATCH'
+                                ],
+                                correct: 1,
+                                explanation: 'CASE-WHEN-ENDCASE es la estructura para múltiples condiciones en ABAP.'
+                            },
+                            {
+                                title: 'CASE con OTHERS',
+                                type: 'fill-blank',
+                                question: 'Completa la estructura CASE para casos no contemplados:',
+                                code: `CASE lv_estado.\n  WHEN 'A'.\n    WRITE: 'Activo'.\n  WHEN ______.\n    WRITE: 'Estado desconocido'.\nENDCASE.`,
+                                placeholder: 'Palabra clave...',
+                                correct: 'others',
+                                explanation: 'OTHERS maneja todos los casos no contemplados en CASE.'
+                            },
+                            {
+                                title: 'Bucle WHILE',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la sintaxis correcta para un bucle WHILE?',
+                                options: [
+                                    'WHILE condición DO...ENDWHILE',
+                                    'WHILE condición...ENDWHILE',
+                                    'DO WHILE condición...ENDDO',
+                                    'REPEAT...UNTIL condición'
+                                ],
+                                correct: 1,
+                                explanation: 'En ABAP se usa WHILE condición...ENDWHILE.'
+                            },
+                            {
+                                title: 'Bucle DO',
+                                type: 'fill-blank',
+                                question: 'Completa el bucle DO con número fijo de iteraciones:',
+                                code: `DO 10 ______.\n  WRITE: sy-index.\n______.`,
+                                placeholder: 'Palabras clave...',
+                                correct: 'times',
+                                explanation: 'DO n TIMES...ENDDO ejecuta el bucle n veces.'
+                            },
+                            {
+                                title: 'Variable del Sistema SY-INDEX',
+                                type: 'multiple-choice',
+                                question: '¿Qué contiene la variable SY-INDEX en un bucle DO?',
+                                options: [
+                                    'El número total de iteraciones',
+                                    'El número de la iteración actual',
+                                    'El valor de la condición',
+                                    'El tiempo transcurrido'
+                                ],
+                                correct: 1,
+                                explanation: 'SY-INDEX contiene el número de la iteración actual en bucles DO.'
+                            },
+                            {
+                                title: 'Instrucción EXIT',
+                                type: 'multiple-choice',
+                                question: '¿Qué hace la instrucción EXIT en un bucle?',
+                                options: [
+                                    'Termina el programa',
+                                    'Sale del bucle actual',
+                                    'Reinicia el bucle',
+                                    'Pausa el bucle'
+                                ],
+                                correct: 1,
+                                explanation: 'EXIT termina inmediatamente el bucle actual.'
+                            },
+                            {
+                                title: 'Instrucción CONTINUE',
+                                type: 'multiple-choice',
+                                question: '¿Qué hace la instrucción CONTINUE en un bucle?',
+                                options: [
+                                    'Termina el bucle',
+                                    'Salta a la siguiente iteración',
+                                    'Reinicia el bucle desde el principio',
+                                    'Pausa el bucle'
+                                ],
+                                correct: 1,
+                                explanation: 'CONTINUE salta el resto de la iteración actual y continúa con la siguiente.'
+                            }
+                        ],
+                        'tablas-internas': [
+                            {
+                                title: 'Declaración de Tabla Interna',
+                                type: 'fill-blank',
+                                question: 'Declara una tabla interna de tipo estándar:',
+                                code: `DATA: lt_empleados TYPE ______ TABLE OF ty_empleado.`,
+                                placeholder: 'Tipo de tabla...',
+                                correct: 'standard',
+                                explanation: 'STANDARD TABLE es el tipo más común de tabla interna en ABAP.'
+                            },
+                            {
+                                title: 'Tipos de Tablas Internas',
+                                type: 'multiple-choice',
+                                question: '¿Cuáles son los tres tipos principales de tablas internas?',
+                                options: [
+                                    'STANDARD, SORTED, HASHED',
+                                    'INTERNAL, EXTERNAL, TEMPORARY',
+                                    'SIMPLE, COMPLEX, NESTED',
+                                    'LOCAL, GLOBAL, SHARED'
+                                ],
+                                correct: 0,
+                                explanation: 'Los tres tipos son: STANDARD (acceso por índice), SORTED (ordenada) y HASHED (acceso por clave).'
+                            },
+                            {
+                                title: 'Declaración con LIKE',
+                                type: 'fill-blank',
+                                question: 'Declara una tabla interna basada en otra tabla:',
+                                code: `DATA: lt_nueva ______ TABLE OF lt_existente.`,
+                                placeholder: 'Palabra clave...',
+                                correct: 'like',
+                                explanation: 'LIKE TABLE OF crea una tabla con la misma estructura que otra existente.'
+                            },
+                            {
+                                title: 'Work Area',
+                                type: 'multiple-choice',
+                                question: '¿Para qué se usa una Work Area con tablas internas?',
+                                options: [
+                                    'Para ordenar la tabla',
+                                    'Para procesar registros individuales',
+                                    'Para crear copias de la tabla',
+                                    'Para borrar la tabla'
+                                ],
+                                correct: 1,
+                                explanation: 'La Work Area se usa para procesar registros individuales de la tabla interna.'
+                            },
+                            {
+                                title: 'Declaración de Work Area',
+                                type: 'fill-blank',
+                                question: 'Declara una work area para la tabla:',
+                                code: `DATA: ls_empleado ______ LINE OF lt_empleados.`,
+                                placeholder: 'Palabra clave...',
+                                correct: 'like',
+                                explanation: 'LIKE LINE OF crea una work area con la estructura de una línea de la tabla.'
+                            },
+                            {
+                                title: 'Comando APPEND',
+                                type: 'multiple-choice',
+                                question: '¿Qué hace el comando APPEND en una tabla interna?',
+                                options: [
+                                    'Borra el último registro',
+                                    'Añade un registro al final',
+                                    'Ordena la tabla',
+                                    'Cuenta los registros'
+                                ],
+                                correct: 1,
+                                explanation: 'APPEND añade un nuevo registro al final de la tabla interna.'
+                            },
+                            {
+                                title: 'Sintaxis APPEND',
+                                type: 'fill-blank',
+                                question: 'Completa el comando para añadir un registro:',
+                                code: `ls_empleado-nombre = 'Juan'.\n______ ls_empleado TO lt_empleados.`,
+                                placeholder: 'Comando...',
+                                correct: 'append',
+                                explanation: 'APPEND work_area TO tabla añade el contenido de la work area a la tabla.'
+                            },
+                            {
+                                title: 'Loop en Tablas',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la sintaxis correcta para recorrer una tabla interna?',
+                                options: [
+                                    'LOOP AT lt_tabla INTO ls_linea',
+                                    'FOR EACH ls_linea IN lt_tabla',
+                                    'WHILE ls_linea = NEXT(lt_tabla)',
+                                    'ITERATE lt_tabla INTO ls_linea'
+                                ],
+                                correct: 0,
+                                explanation: 'LOOP AT tabla INTO estructura es la sintaxis estándar en ABAP.'
+                            },
+                            {
+                                title: 'Variable SY-TABIX',
+                                type: 'multiple-choice',
+                                question: '¿Qué contiene SY-TABIX en un LOOP AT?',
+                                options: [
+                                    'El total de registros',
+                                    'El índice del registro actual',
+                                    'El valor del registro',
+                                    'El tipo de tabla'
+                                ],
+                                correct: 1,
+                                explanation: 'SY-TABIX contiene el índice del registro actual en el loop.'
+                            },
+                            {
+                                title: 'Comando READ TABLE',
+                                type: 'fill-blank',
+                                question: 'Completa el comando para leer un registro específico:',
+                                code: `______ TABLE lt_empleados INTO ls_empleado INDEX 1.`,
+                                placeholder: 'Comando...',
+                                correct: 'read',
+                                explanation: 'READ TABLE permite leer un registro específico de la tabla interna.'
+                            },
+                            {
+                                title: 'Verificación después de READ',
+                                type: 'multiple-choice',
+                                question: '¿Qué variable del sistema verificas después de READ TABLE?',
+                                options: ['SY-TABIX', 'SY-SUBRC', 'SY-INDEX', 'SY-UNAME'],
+                                correct: 1,
+                                explanation: 'SY-SUBRC = 0 indica que READ TABLE encontró el registro buscado.'
+                            },
+                            {
+                                title: 'Comando MODIFY',
+                                type: 'multiple-choice',
+                                question: '¿Qué hace el comando MODIFY en una tabla interna?',
+                                options: [
+                                    'Borra un registro',
+                                    'Añade un registro',
+                                    'Actualiza un registro existente',
+                                    'Cuenta los registros'
+                                ],
+                                correct: 2,
+                                explanation: 'MODIFY actualiza un registro existente en la tabla interna.'
+                            },
+                            {
+                                title: 'Comando DELETE',
+                                type: 'fill-blank',
+                                question: 'Completa el comando para borrar el registro actual en un loop:',
+                                code: `LOOP AT lt_tabla INTO ls_linea.\n  IF ls_linea-activo = ' '.\n    ______ lt_tabla.\n  ENDIF.\nENDLOOP.`,
+                                placeholder: 'Comando...',
+                                correct: 'delete',
+                                explanation: 'DELETE tabla (sin índice) borra el registro actual dentro de un loop.'
+                            },
+                            {
+                                title: 'Comando CLEAR',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la diferencia entre CLEAR y REFRESH?',
+                                options: [
+                                    'Son sinónimos',
+                                    'CLEAR vacía work area, REFRESH vacía tabla',
+                                    'CLEAR es más rápido',
+                                    'REFRESH es obsoleto'
+                                ],
+                                correct: 1,
+                                explanation: 'CLEAR vacía el contenido de una work area, REFRESH vacía completamente una tabla interna.'
+                            },
+                            {
+                                title: 'Función LINES',
+                                type: 'fill-blank',
+                                question: 'Completa para obtener el número de registros:',
+                                code: `lv_contador = ______ ( lt_empleados ).`,
+                                placeholder: 'Función...',
+                                correct: 'lines',
+                                explanation: 'LINES() devuelve el número de registros de una tabla interna.'
+                            }
+                        ]
+                    },
+                    intermediate: {
+                        'abap-oo': [
+                            {
+                                title: 'Definición de Clase',
+                                type: 'fill-blank',
+                                question: 'Completa la definición de una clase:',
+                                code: `______ lcl_empleado DEFINITION.\n  PUBLIC SECTION.\n    DATA: mv_nombre TYPE string.\n  PRIVATE SECTION.\n    DATA: mv_salario TYPE p.\n______.`,
+                                placeholder: 'Palabras clave...',
+                                correct: 'class',
+                                explanation: 'Las clases se definen con CLASS...ENDCLASS en ABAP.'
+                            },
+                            {
+                                title: 'Secciones de Visibilidad',
+                                type: 'multiple-choice',
+                                question: '¿En qué sección declararías un método que solo debe ser accesible desde subclases?',
+                                options: ['PUBLIC SECTION', 'PRIVATE SECTION', 'PROTECTED SECTION', 'FRIEND SECTION'],
+                                correct: 2,
+                                explanation: 'PROTECTED SECTION es accesible desde la misma clase y sus subclases.'
+                            },
+                            {
+                                title: 'Atributos de Clase',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la diferencia entre atributos de instancia y de clase?',
+                                options: [
+                                    'No hay diferencia',
+                                    'Instancia: cada objeto tiene su copia, Clase: compartido por todos',
+                                    'Instancia es más rápido',
+                                    'Clase es obsoleto'
+                                ],
+                                correct: 1,
+                                explanation: 'Atributos de instancia: cada objeto tiene su propia copia. Atributos de clase: compartidos por todas las instancias.'
+                            },
+                            {
+                                title: 'Declaración de Atributos de Clase',
+                                type: 'fill-blank',
+                                question: 'Declara un atributo de clase:',
+                                code: `PUBLIC SECTION.\n  ______-DATA: gv_contador TYPE i.`,
+                                placeholder: 'Palabra clave...',
+                                correct: 'class',
+                                explanation: 'CLASS-DATA declara atributos que pertenecen a la clase, no a la instancia.'
+                            },
+                            {
+                                title: 'Constructor de Clase',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es el nombre del método constructor en ABAP OO?',
+                                options: ['constructor', 'new', 'init', 'create'],
+                                correct: 0,
+                                explanation: 'El método constructor se llama "constructor" en ABAP OO.'
+                            },
+                            {
+                                title: 'Constructor de Clase vs Instancia',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la diferencia entre constructor y class_constructor?',
+                                options: [
+                                    'Son sinónimos',
+                                    'constructor: se ejecuta al crear instancia, class_constructor: se ejecuta al cargar la clase',
+                                    'class_constructor es obsoleto',
+                                    'constructor es más rápido'
+                                ],
+                                correct: 1,
+                                explanation: 'constructor se ejecuta al crear cada instancia, class_constructor se ejecuta una sola vez al cargar la clase.'
+                            },
+                            {
+                                title: 'Implementación de Métodos',
+                                type: 'fill-blank',
+                                question: 'Completa la implementación del método:',
+                                code: `CLASS lcl_empleado IMPLEMENTATION.\n  ______ constructor.\n    mv_nombre = 'Sin nombre'.\n  ______.\nENDCLASS.`,
+                                placeholder: 'Palabras clave...',
+                                correct: 'method',
+                                explanation: 'Los métodos se implementan con METHOD...ENDMETHOD.'
+                            },
+                            {
+                                title: 'Parámetros de Métodos - IMPORTING',
+                                type: 'multiple-choice',
+                                question: '¿Qué tipo de parámetros se declaran con IMPORTING?',
+                                options: [
+                                    'Parámetros de salida',
+                                    'Parámetros de entrada',
+                                    'Parámetros de entrada/salida',
+                                    'Parámetros opcionales'
+                                ],
+                                correct: 1,
+                                explanation: 'IMPORTING declara parámetros que el método recibe desde el exterior.'
+                            },
+                            {
+                                title: 'Parámetros de Métodos - EXPORTING',
+                                type: 'fill-blank',
+                                question: 'Completa la declaración de un método con parámetro de salida:',
+                                code: `METHODS: get_datos\n  ______ ev_nombre TYPE string\n           ev_edad TYPE i.`,
+                                placeholder: 'Palabra clave...',
+                                correct: 'exporting',
+                                explanation: 'EXPORTING declara parámetros que el método devuelve al exterior.'
+                            },
+                            {
+                                title: 'Parámetros RETURNING',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la ventaja de usar RETURNING en lugar de EXPORTING?',
+                                options: [
+                                    'Es más rápido',
+                                    'Permite sintaxis funcional (método como expresión)',
+                                    'Usa menos memoria',
+                                    'Es más seguro'
+                                ],
+                                correct: 1,
+                                explanation: 'RETURNING permite usar el método como una expresión funcional, más limpio y legible.'
+                            },
+                            {
+                                title: 'Instanciación de Objetos - Clásica',
+                                type: 'fill-blank',
+                                question: 'Completa la instanciación clásica:',
+                                code: `DATA: lo_empleado TYPE REF TO lcl_empleado.\n______ OBJECT lo_empleado.`,
+                                placeholder: 'Comando...',
+                                correct: 'create',
+                                explanation: 'CREATE OBJECT es la forma clásica de instanciar objetos en ABAP.'
+                            },
+                            {
+                                title: 'Instanciación de Objetos - Moderna',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la forma moderna de crear una instancia de objeto?',
+                                options: [
+                                    'CREATE OBJECT lo_emp',
+                                    'lo_emp = NEW lcl_empleado( )',
+                                    'INSTANTIATE lo_emp TYPE lcl_empleado',
+                                    'lo_emp = lcl_empleado=>new( )'
+                                ],
+                                correct: 1,
+                                explanation: 'NEW es la forma moderna de instanciar objetos en ABAP 7.4+.'
+                            },
+                            {
+                                title: 'Llamada a Métodos',
+                                type: 'fill-blank',
+                                question: 'Completa la llamada a un método:',
+                                code: `lo_empleado->______( iv_nombre = 'Juan' ).`,
+                                placeholder: 'Operador...',
+                                correct: 'set_nombre',
+                                explanation: 'El operador -> se usa para llamar métodos de una instancia.'
+                            },
+                            {
+                                title: 'Métodos Estáticos',
+                                type: 'fill-blank',
+                                question: 'Declara un método estático:',
+                                code: `PUBLIC SECTION.\n  ______-METHODS: get_contador RETURNING VALUE(rv_count) TYPE i.`,
+                                placeholder: 'Palabra clave...',
+                                correct: 'class',
+                                explanation: 'CLASS-METHODS declara métodos estáticos que pertenecen a la clase, no a la instancia.'
+                            }
+                        ],
+                        'field-symbols': [
+                            {
+                                title: 'Declaración de Field Symbol',
+                                type: 'fill-blank',
+                                question: 'Declara un field symbol:',
+                                code: `______-SYMBOLS: <fs_empleado> TYPE ty_empleado.`,
+                                placeholder: 'Palabra clave...',
+                                correct: 'field',
+                                explanation: 'FIELD-SYMBOLS declara un field symbol que actúa como puntero.'
+                            },
+                            {
+                                title: 'Sintaxis de Field Symbol',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la sintaxis correcta para declarar un field symbol?',
+                                options: [
+                                    'FIELD-SYMBOL: <fs_data> TYPE string',
+                                    'FIELD-SYMBOLS: <fs_data> TYPE string',
+                                    'FIELD-SYMBOL: fs_data TYPE string',
+                                    'FIELD-SYMBOLS: fs_data TYPE string'
+                                ],
+                                correct: 1,
+                                explanation: 'FIELD-SYMBOLS con los símbolos < > es la sintaxis correcta.'
+                            },
+                            {
+                                title: 'Asignación de Field Symbol',
+                                type: 'fill-blank',
+                                question: 'Asigna una variable al field symbol:',
+                                code: `______ <fs_empleado> TO ls_empleado.`,
+                                placeholder: 'Comando...',
+                                correct: 'assign',
+                                explanation: 'ASSIGN vincula un field symbol a una variable o área de memoria.'
+                            },
+                            {
+                                title: 'Verificación de Asignación',
+                                type: 'multiple-choice',
+                                question: '¿Cómo verificas si un field symbol está asignado?',
+                                options: [
+                                    'IF <fs_data> IS ASSIGNED',
+                                    'IF <fs_data> IS NOT INITIAL',
+                                    'IF <fs_data> IS BOUND',
+                                    'IF <fs_data> IS ACTIVE'
+                                ],
+                                correct: 0,
+                                explanation: 'IS ASSIGNED verifica si un field symbol está apuntando a algún dato.'
+                            },
+                            {
+                                title: 'Ventajas de Field Symbols',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la principal ventaja de usar field symbols?',
+                                options: [
+                                    'Ocupan menos memoria',
+                                    'Son más seguros',
+                                    'Mejoran el rendimiento al evitar copias de datos',
+                                    'Son más fáciles de usar'
+                                ],
+                                correct: 2,
+                                explanation: 'Los field symbols apuntan directamente a la memoria, evitando copias costosas de datos.'
+                            }
+                        ],
+                        'modularizacion': [
+                            {
+                                title: 'Módulos de Función',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la principal ventaja de los módulos de función?',
+                                options: [
+                                    'Son más rápidos',
+                                    'Permiten reutilización de código',
+                                    'Ocupan menos memoria',
+                                    'Son más seguros'
+                                ],
+                                correct: 1,
+                                explanation: 'Los módulos de función permiten reutilizar código y centralizar lógica común.'
+                            },
+                            {
+                                title: 'Llamada a Función',
+                                type: 'fill-blank',
+                                question: 'Completa la llamada a un módulo de función:',
+                                code: `______ FUNCTION 'Z_CALCULAR_IMPUESTO'\n  EXPORTING\n    iv_importe = lv_importe\n  IMPORTING\n    ev_impuesto = lv_impuesto.`,
+                                placeholder: 'Comando...',
+                                correct: 'call',
+                                explanation: 'CALL FUNCTION es el comando para ejecutar un módulo de función.'
+                            },
+                            {
+                                title: 'Verificación de Función',
+                                type: 'multiple-choice',
+                                question: '¿Qué debes verificar después de llamar a una función?',
+                                options: ['SY-TABIX', 'SY-SUBRC', 'SY-INDEX', 'SY-UNAME'],
+                                correct: 1,
+                                explanation: 'SY-SUBRC indica si la función se ejecutó correctamente (0) o hubo error.'
+                            }
+                        ]
+                    },
+                    advanced: {
+                        'patrones-diseno': [
+                            {
+                                title: 'Factory Pattern',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es el beneficio principal del patrón Factory?',
+                                options: [
+                                    'Mejora el rendimiento',
+                                    'Centraliza la creación de objetos',
+                                    'Reduce el uso de memoria',
+                                    'Simplifica la herencia'
+                                ],
+                                correct: 1,
+                                explanation: 'El patrón Factory centraliza y controla la creación de objetos.'
+                            },
+                            {
+                                title: 'Singleton Pattern',
+                                type: 'fill-blank',
+                                question: 'Implementa el patrón Singleton:',
+                                code: `CLASS-DATA: go_instance TYPE REF TO lcl_singleton.\nCLASS-METHODS: get_instance RETURNING VALUE(ro_instance) TYPE REF TO lcl_singleton.\n\nMETHOD get_instance.\n  IF go_instance IS ______.\n    go_instance = NEW #( ).\n  ENDIF.\n  ro_instance = go_instance.\nENDMETHOD.`,
+                                placeholder: 'Condición...',
+                                correct: 'initial',
+                                explanation: 'Se verifica si la instancia IS INITIAL antes de crearla por primera vez.'
+                            }
+                        ],
+                        'performance': [
+                            {
+                                title: 'Optimización SQL',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la mejor práctica para consultas SQL en ABAP?',
+                                options: [
+                                    'Usar SELECT *',
+                                    'Usar SELECT con campos específicos',
+                                    'Usar múltiples SELECT individuales',
+                                    'Evitar WHERE clause'
+                                ],
+                                correct: 1,
+                                explanation: 'SELECT con campos específicos reduce transferencia de datos y mejora rendimiento.'
+                            },
+                            {
+                                title: 'Índices de Base de Datos',
+                                type: 'fill-blank',
+                                question: 'Los índices mejoran el rendimiento de consultas con cláusula ______:',
+                                placeholder: 'Cláusula SQL...',
+                                correct: 'where',
+                                explanation: 'Los índices aceleran las consultas que usan WHERE para filtrar datos.'
                             }
                         ]
                     }
@@ -316,6 +1003,310 @@
                                 ],
                                 correct: 0,
                                 explanation: 'Los tres tipos principales son: Esquemas de Cálculo, Esquemas de Validación y Esquemas de Sustitución.'
+                            },
+                            {
+                                title: 'Estructura de un Esquema',
+                                type: 'fill-blank',
+                                question: 'Un esquema SAP está compuesto por una secuencia de ______:',
+                                placeholder: 'Completa la palabra...',
+                                correct: 'pasos',
+                                explanation: 'Los esquemas están compuestos por una secuencia de pasos que se ejecutan en orden.'
+                            },
+                            {
+                                title: 'Pasos en un Esquema',
+                                type: 'multiple-choice',
+                                question: '¿Qué elementos principales contiene un paso de esquema?',
+                                options: [
+                                    'Solo una condición',
+                                    'Solo una cuenta',
+                                    'Condición, Cuenta y Asignación',
+                                    'Solo una asignación'
+                                ],
+                                correct: 2,
+                                explanation: 'Cada paso contiene: Condición (cuándo se ejecuta), Cuenta (qué cuenta afecta) y Asignación (cómo se calcula).'
+                            },
+                            {
+                                title: 'Condiciones en Esquemas',
+                                type: 'fill-blank',
+                                question: 'Las condiciones en los esquemas se evalúan como ______ o ______:',
+                                code: `Paso: 010\nCondición: KOART = 'D'\nCuenta: 400000\nAsignación: +`,
+                                placeholder: 'Dos estados posibles...',
+                                correct: 'verdadero',
+                                explanation: 'Las condiciones se evalúan como Verdadero (TRUE) o Falso (FALSE) para determinar si el paso se ejecuta.'
+                            },
+                            {
+                                title: 'Tipos de Asignación',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es el significado del signo "+" en la asignación de un esquema?',
+                                options: [
+                                    'Resta el importe',
+                                    'Suma el importe',
+                                    'Multiplica el importe',
+                                    'Ignora el importe'
+                                ],
+                                correct: 1,
+                                explanation: 'El signo "+" significa que el importe se suma (débito), mientras que "-" significa que se resta (crédito).'
+                            },
+                            {
+                                title: 'Secuencia de Pasos',
+                                type: 'fill-blank',
+                                question: 'Los pasos en un esquema se numeran típicamente de ______ en ______:',
+                                code: `Paso: 010\nPaso: 020\nPaso: 030\nPaso: 040`,
+                                placeholder: 'Incremento numérico...',
+                                correct: '10',
+                                explanation: 'Los pasos se numeran típicamente de 10 en 10 (010, 020, 030...) para permitir insertar pasos intermedios.'
+                            },
+                            {
+                                title: 'Ejecución Condicional',
+                                type: 'multiple-choice',
+                                question: '¿Qué sucede si la condición de un paso es FALSE?',
+                                options: [
+                                    'Se ejecuta el paso',
+                                    'Se omite el paso',
+                                    'Se detiene el esquema',
+                                    'Se genera un error'
+                                ],
+                                correct: 1,
+                                explanation: 'Si la condición es FALSE, el paso se omite y el esquema continúa con el siguiente paso.'
+                            },
+                            {
+                                title: 'Cuentas en Esquemas',
+                                type: 'fill-blank',
+                                question: 'En los esquemas de contabilización, las cuentas se especifican usando números de ______:',
+                                placeholder: 'Tipo de cuenta...',
+                                correct: 'mayor',
+                                explanation: 'Las cuentas se especifican usando números de cuenta de mayor (GL accounts).'
+                            },
+                            {
+                                title: 'Elementos de Control',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la función del elemento de control en un esquema?',
+                                options: [
+                                    'Almacenar datos',
+                                    'Controlar el flujo de ejecución',
+                                    'Generar reportes',
+                                    'Validar usuarios'
+                                ],
+                                correct: 1,
+                                explanation: 'Los elementos de control determinan el flujo de ejecución del esquema, como saltos condicionales o bucles.'
+                            },
+                            {
+                                title: 'Esquemas de Cálculo',
+                                type: 'multiple-choice',
+                                question: '¿En qué módulo se usan principalmente los esquemas de cálculo?',
+                                options: [
+                                    'Finanzas (FI)',
+                                    'Recursos Humanos (HR)',
+                                    'Materiales (MM)',
+                                    'Ventas (SD)'
+                                ],
+                                correct: 1,
+                                explanation: 'Los esquemas de cálculo se usan principalmente en HR para calcular nóminas y beneficios.'
+                            },
+                            {
+                                title: 'Esquemas de Validación',
+                                type: 'fill-blank',
+                                question: 'Los esquemas de validación verifican que los datos cumplan con ______:',
+                                placeholder: 'Qué verifican...',
+                                correct: 'reglas',
+                                explanation: 'Los esquemas de validación verifican que los datos cumplan con reglas de negocio específicas.'
+                            },
+                            {
+                                title: 'Esquemas de Sustitución',
+                                type: 'multiple-choice',
+                                question: '¿Qué hacen los esquemas de sustitución?',
+                                options: [
+                                    'Validan datos',
+                                    'Calculan importes',
+                                    'Reemplazan valores automáticamente',
+                                    'Generan reportes'
+                                ],
+                                correct: 2,
+                                explanation: 'Los esquemas de sustitución reemplazan automáticamente valores en campos específicos.'
+                            },
+                            {
+                                title: 'Activación de Esquemas',
+                                type: 'multiple-choice',
+                                question: '¿Cuándo se ejecutan los esquemas en SAP?',
+                                options: [
+                                    'Solo manualmente',
+                                    'Automáticamente durante transacciones específicas',
+                                    'Solo en batch jobs',
+                                    'Solo al final del día'
+                                ],
+                                correct: 1,
+                                explanation: 'Los esquemas se ejecutan automáticamente durante las transacciones donde están configurados.'
+                            },
+                            {
+                                title: 'Orden de Ejecución',
+                                type: 'fill-blank',
+                                question: 'Los pasos de un esquema se ejecutan en orden ______:',
+                                placeholder: 'Tipo de orden...',
+                                correct: 'secuencial',
+                                explanation: 'Los pasos se ejecutan en orden secuencial según su numeración.'
+                            }
+                        ],
+                        'configuracion': [
+                            {
+                                title: 'Creación de Esquemas',
+                                type: 'multiple-choice',
+                                question: '¿En qué herramienta se crean los esquemas SAP?',
+                                options: [
+                                    'SE80',
+                                    'SPRO (IMG)',
+                                    'SE11',
+                                    'SM30'
+                                ],
+                                correct: 1,
+                                explanation: 'Los esquemas se crean y configuran en SPRO (Implementation Guide).'
+                            },
+                            {
+                                title: 'Naming Convention',
+                                type: 'fill-blank',
+                                question: 'Los esquemas personalizados deben comenzar con ______ o ______:',
+                                placeholder: 'Prefijos...',
+                                correct: 'z',
+                                explanation: 'Los esquemas personalizados deben comenzar con Z o Y para distinguirlos de los estándar.'
+                            },
+                            {
+                                title: 'Copia de Esquemas',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la mejor práctica al crear esquemas personalizados?',
+                                options: [
+                                    'Crear desde cero',
+                                    'Copiar un esquema estándar y modificarlo',
+                                    'Usar solo esquemas SAP',
+                                    'Evitar usar esquemas'
+                                ],
+                                correct: 1,
+                                explanation: 'Es mejor copiar un esquema estándar similar y modificarlo según necesidades.'
+                            },
+                            {
+                                title: 'Transporte de Esquemas',
+                                type: 'multiple-choice',
+                                question: '¿Cómo se transportan los esquemas entre sistemas?',
+                                options: [
+                                    'Manualmente',
+                                    'Mediante órdenes de transporte',
+                                    'Por email',
+                                    'No se pueden transportar'
+                                ],
+                                correct: 1,
+                                explanation: 'Los esquemas se transportan mediante órdenes de transporte como otras configuraciones.'
+                            },
+                            {
+                                title: 'Pruebas de Esquemas',
+                                type: 'fill-blank',
+                                question: 'Antes de activar un esquema en producción, se debe probar en ______:',
+                                placeholder: 'Tipo de sistema...',
+                                correct: 'desarrollo',
+                                explanation: 'Los esquemas deben probarse exhaustivamente en desarrollo antes de pasar a producción.'
+                            },
+                            {
+                                title: 'Documentación de Esquemas',
+                                type: 'multiple-choice',
+                                question: '¿Qué información debe documentarse en un esquema?',
+                                options: [
+                                    'Solo el nombre',
+                                    'Propósito, lógica y casos de uso',
+                                    'Solo los pasos',
+                                    'Solo el autor'
+                                ],
+                                correct: 1,
+                                explanation: 'Se debe documentar el propósito, lógica de negocio, casos de uso y mantenimiento.'
+                            }
+                        ]
+                    },
+                    intermediate: {
+                        'esquemas-avanzados': [
+                            {
+                                title: 'Configuración de Esquemas',
+                                type: 'multiple-choice',
+                                question: '¿En qué transacción se configuran los esquemas de contabilización automática?',
+                                options: ['OB41', 'OBX1', 'OBYC', 'OBA1'],
+                                correct: 0,
+                                explanation: 'OB41 es la transacción para configurar esquemas de contabilización automática en SAP.'
+                            },
+                            {
+                                title: 'Asignación de Esquemas',
+                                type: 'fill-blank',
+                                question: 'Los esquemas se asignan a ______ o ______ específicos:',
+                                code: `Sociedad: 1000\nEsquema: RMCL00\nClase de Movimiento: BSX`,
+                                placeholder: 'Elementos de configuración...',
+                                correct: 'sociedades',
+                                explanation: 'Los esquemas se asignan a sociedades específicas o a tipos de operaciones/movimientos.'
+                            },
+                            {
+                                title: 'Debugging de Esquemas',
+                                type: 'multiple-choice',
+                                question: '¿Qué herramienta se usa para hacer debug de esquemas SAP?',
+                                options: [
+                                    'SE80',
+                                    'SE11',
+                                    'Depurador ABAP',
+                                    'ST05'
+                                ],
+                                correct: 2,
+                                explanation: 'El depurador ABAP permite hacer debug de esquemas para ver el flujo de ejecución paso a paso.'
+                            },
+                            {
+                                title: 'Tablas de Configuración',
+                                type: 'fill-blank',
+                                question: 'Los esquemas se almacenan en la tabla ______:',
+                                placeholder: 'Nombre de tabla...',
+                                correct: 'gb01',
+                                explanation: 'La tabla GB01 contiene la configuración de los esquemas y sus pasos.'
+                            },
+                            {
+                                title: 'Validación de Esquemas',
+                                type: 'multiple-choice',
+                                question: '¿Cuándo se ejecutan los esquemas de validación?',
+                                options: [
+                                    'Solo al crear documentos',
+                                    'Solo al modificar documentos',
+                                    'Al crear y modificar documentos',
+                                    'Solo al consultar documentos'
+                                ],
+                                correct: 2,
+                                explanation: 'Los esquemas de validación se ejecutan tanto al crear como al modificar documentos contables.'
+                            }
+                        ]
+                    },
+                    advanced: {
+                        'optimizacion': [
+                            {
+                                title: 'Esquemas Complejos',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la mejor práctica para esquemas con muchos pasos?',
+                                options: [
+                                    'Usar un solo esquema grande',
+                                    'Dividir en múltiples esquemas más pequeños',
+                                    'Evitar usar esquemas',
+                                    'Usar solo validaciones manuales'
+                                ],
+                                correct: 1,
+                                explanation: 'Es mejor dividir esquemas complejos en múltiples esquemas más pequeños y manejables.'
+                            },
+                            {
+                                title: 'Optimización de Performance',
+                                type: 'fill-blank',
+                                question: 'Para mejorar el rendimiento, las condiciones más ______ deben ir primero:',
+                                placeholder: 'Tipo de condición...',
+                                correct: 'restrictivas',
+                                explanation: 'Las condiciones más restrictivas deben ir primero para filtrar rápidamente y evitar procesamiento innecesario.'
+                            },
+                            {
+                                title: 'Gestión de Errores',
+                                type: 'multiple-choice',
+                                question: '¿Qué sucede cuando un esquema encuentra un error durante la ejecución?',
+                                options: [
+                                    'Continúa con el siguiente paso',
+                                    'Se detiene y revierte toda la transacción',
+                                    'Solo revierte el paso actual',
+                                    'Genera un warning y continúa'
+                                ],
+                                correct: 1,
+                                explanation: 'Los errores en esquemas detienen la ejecución y revierten toda la transacción para mantener la integridad.'
                             }
                         ]
                     }
@@ -388,7 +1379,14 @@
                     correct = answer === currentLessonData.correct;
                 } else if (currentLessonData.type === 'fill-blank') {
                     const userAnswerLower = answer.toLowerCase().trim();
-                    correct = userAnswerLower === currentLessonData.correct.toLowerCase();
+                    
+                    if (Array.isArray(currentLessonData.correct)) {
+                        correct = currentLessonData.correct.every(correctAnswer => 
+                            userAnswerLower.includes(correctAnswer.toLowerCase())
+                        );
+                    } else {
+                        correct = userAnswerLower === currentLessonData.correct.toLowerCase();
+                    }
                 }
 
                 setIsCorrect(correct);
@@ -453,6 +1451,20 @@
                         ),
                         React.createElement('div', { className: "space-y-4" },
                             Object.entries(modules).map(([key, module]) => {
+                                // Calcular progreso general del módulo
+                                const moduleSubsections = Object.keys(subsections[key] || {}).flatMap(level => 
+                                    Object.keys(subsections[key][level] || {}).map(subsection => `${key}-${level}-${subsection}`)
+                                );
+                                const moduleProgress = moduleSubsections.reduce((acc, subKey) => {
+                                    const progress = appState.moduleProgress[subKey] || { completed: 0, total: 0, score: 0 };
+                                    acc.completed += progress.completed;
+                                    acc.total += progress.total;
+                                    acc.score += progress.score;
+                                    return acc;
+                                }, { completed: 0, total: 0, score: 0 });
+                                
+                                const progressPercentage = moduleProgress.total > 0 ? Math.round((moduleProgress.completed / moduleProgress.total) * 100) : 0;
+                                
                                 return React.createElement('button', {
                                     key: key,
                                     onClick: () => {
@@ -465,7 +1477,18 @@
                                             React.createElement(module.icon, { className: "w-8 h-8 text-gray-700" }),
                                             React.createElement('div', null,
                                                 React.createElement('h3', { className: "text-xl font-medium text-gray-900" }, module.title),
-                                                React.createElement('p', { className: "text-gray-600 text-sm mt-1" }, module.description)
+                                                React.createElement('p', { className: "text-gray-600 text-sm mt-1" }, module.description),
+                                                moduleProgress.total > 0 && React.createElement('div', { className: "mt-2" },
+                                                    React.createElement('div', { className: "w-32 bg-gray-200 rounded-full h-2" },
+                                                        React.createElement('div', {
+                                                            className: "bg-blue-600 h-2 rounded-full",
+                                                            style: { width: `${progressPercentage}%` }
+                                                        })
+                                                    ),
+                                                    React.createElement('p', { className: "text-xs text-gray-500 mt-1" },
+                                                        `${progressPercentage}% completado (${moduleProgress.score}/${moduleProgress.total})`
+                                                    )
+                                                )
                                             )
                                         ),
                                         React.createElement(ChevronRight, { className: "w-6 h-6 text-gray-400" })
