@@ -1,0 +1,867 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SAP Learning - Aprende SAP de forma interactiva</title>
+    <script src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            margin: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+    </style>
+</head>
+<body>
+    <div id="root"></div>
+
+    <script type="text/babel">
+        const { useState, useEffect } = React;
+        const { ChevronRight, ChevronLeft, Check, X, Play, BookOpen, Code, Award, Target, Database, Layers } = lucide;
+
+        const SAPLearningApp = () => {
+            // Estado inicial desde localStorage
+            const getInitialState = () => {
+                const saved = localStorage.getItem('sapLearningProgress');
+                if (saved) {
+                    try {
+                        return JSON.parse(saved);
+                    } catch (e) {
+                        console.error('Error parsing saved data:', e);
+                    }
+                }
+                return {
+                    currentScreen: 'home',
+                    selectedModule: null,
+                    selectedLevel: null,
+                    selectedSubsection: null,
+                    currentLesson: 0,
+                    score: 0,
+                    completedLessons: {},
+                    moduleProgress: {}
+                };
+            };
+
+            const [appState, setAppState] = useState(getInitialState());
+            const [userAnswer, setUserAnswer] = useState('');
+            const [selectedAnswers, setSelectedAnswers] = useState([]);
+            const [showResult, setShowResult] = useState(false);
+            const [isCorrect, setIsCorrect] = useState(false);
+
+            // Guardar progreso en localStorage cada vez que cambie el estado
+            useEffect(() => {
+                localStorage.setItem('sapLearningProgress', JSON.stringify(appState));
+            }, [appState]);
+
+            // Función helper para actualizar estado
+            const updateAppState = (updates) => {
+                setAppState(prev => ({ ...prev, ...updates }));
+            };
+
+            // Función para marcar lección como completada
+            const markLessonCompleted = (module, level, subsection, lessonIndex, isCorrect) => {
+                const key = `${module}-${level}-${subsection}`;
+                setAppState(prev => {
+                    const newCompletedLessons = { ...prev.completedLessons };
+                    const newModuleProgress = { ...prev.moduleProgress };
+
+                    if (!newCompletedLessons[key]) {
+                        newCompletedLessons[key] = {};
+                    }
+                    newCompletedLessons[key][lessonIndex] = isCorrect;
+
+                    // Calcular progreso del módulo
+                    if (!newModuleProgress[key]) {
+                        newModuleProgress[key] = { completed: 0, total: 0, score: 0 };
+                    }
+                    
+                    const totalLessons = lessons[module][level][subsection].length;
+                    const completedCount = Object.keys(newCompletedLessons[key]).length;
+                    const correctCount = Object.values(newCompletedLessons[key]).filter(Boolean).length;
+                    
+                    newModuleProgress[key] = {
+                        completed: completedCount,
+                        total: totalLessons,
+                        score: correctCount
+                    };
+
+                    return {
+                        ...prev,
+                        completedLessons: newCompletedLessons,
+                        moduleProgress: newModuleProgress
+                    };
+                });
+            };
+
+            // Función para obtener progreso de una subsección
+            const getSubsectionProgress = (module, level, subsection) => {
+                const key = `${module}-${level}-${subsection}`;
+                return appState.moduleProgress[key] || { completed: 0, total: 0, score: 0 };
+            };
+
+            // Función para resetear progreso
+            const resetProgress = () => {
+                localStorage.removeItem('sapLearningProgress');
+                setAppState({
+                    currentScreen: 'home',
+                    selectedModule: null,
+                    selectedLevel: null,
+                    selectedSubsection: null,
+                    currentLesson: 0,
+                    score: 0,
+                    completedLessons: {},
+                    moduleProgress: {}
+                });
+            };
+
+            const modules = {
+                abap: {
+                    title: 'ABAP',
+                    icon: Code,
+                    description: 'Aprende programación en SAP ABAP',
+                    color: 'bg-blue-50 border-blue-200'
+                },
+                schemas: {
+                    title: 'Esquemas SAP',
+                    icon: Database,
+                    description: 'Domina los esquemas y estructuras de SAP',
+                    color: 'bg-green-50 border-green-200'
+                }
+            };
+
+            const levels = {
+                beginner: {
+                    title: 'Principiante',
+                    description: 'Conceptos básicos y fundamentos',
+                    icon: '🌱'
+                },
+                intermediate: {
+                    title: 'Intermedio',
+                    description: 'Configuración y aplicación práctica',
+                    icon: '🚀'
+                },
+                advanced: {
+                    title: 'Avanzado',
+                    description: 'Optimización y casos complejos',
+                    icon: '⭐'
+                }
+            };
+
+            const subsections = {
+                abap: {
+                    beginner: {
+                        'fundamentos': {
+                            title: 'Fundamentos ABAP',
+                            description: 'Variables, tipos de datos, estructuras básicas',
+                            icon: '📚',
+                            color: 'bg-blue-50'
+                        },
+                        'estructuras-control': {
+                            title: 'Estructuras de Control',
+                            description: 'IF, CASE, WHILE, bucles y condiciones',
+                            icon: '🔄',
+                            color: 'bg-purple-50'
+                        },
+                        'tablas-internas': {
+                            title: 'Tablas Internas',
+                            description: 'Declaración, manipulación y procesamiento',
+                            icon: '📊',
+                            color: 'bg-indigo-50'
+                        }
+                    },
+                    intermediate: {
+                        'abap-oo': {
+                            title: 'ABAP Orientado a Objetos',
+                            description: 'Clases, objetos, herencia e interfaces',
+                            icon: '🏗️',
+                            color: 'bg-emerald-50'
+                        },
+                        'field-symbols': {
+                            title: 'Field Symbols',
+                            description: 'Punteros, asignaciones dinámicas y performance',
+                            icon: '🎯',
+                            color: 'bg-orange-50'
+                        },
+                        'modularizacion': {
+                            title: 'Modularización',
+                            description: 'Funciones, métodos y reutilización de código',
+                            icon: '🧩',
+                            color: 'bg-cyan-50'
+                        }
+                    },
+                    advanced: {
+                        'patrones-diseno': {
+                            title: 'Patrones de Diseño',
+                            description: 'Factory, Singleton, Observer y más',
+                            icon: '⚙️',
+                            color: 'bg-rose-50'
+                        },
+                        'performance': {
+                            title: 'Optimización Performance',
+                            description: 'SQL eficiente, índices y mejores prácticas',
+                            icon: '⚡',
+                            color: 'bg-yellow-50'
+                        }
+                    }
+                },
+                schemas: {
+                    beginner: {
+                        'conceptos-basicos': {
+                            title: 'Conceptos Básicos',
+                            description: 'Qué son los esquemas, tipos y estructura',
+                            icon: '📋',
+                            color: 'bg-green-50'
+                        },
+                        'configuracion': {
+                            title: 'Configuración Básica',
+                            description: 'Creación y asignación de esquemas',
+                            icon: '⚙️',
+                            color: 'bg-teal-50'
+                        }
+                    },
+                    intermediate: {
+                        'esquemas-avanzados': {
+                            title: 'Esquemas Avanzados',
+                            description: 'Validaciones, sustituciones y debugging',
+                            icon: '🔧',
+                            color: 'bg-lime-50'
+                        }
+                    },
+                    advanced: {
+                        'optimizacion': {
+                            title: 'Optimización',
+                            description: 'Performance, mejores prácticas y troubleshooting',
+                            icon: '🚀',
+                            color: 'bg-emerald-50'
+                        }
+                    }
+                }
+            };
+
+            const lessons = {
+                abap: {
+                    beginner: {
+                        'fundamentos': [
+                            {
+                                title: 'Tipos de Datos Básicos',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es el tipo de dato correcto para almacenar un número entero en ABAP?',
+                                options: ['STRING', 'I', 'P', 'C'],
+                                correct: 1,
+                                explanation: 'El tipo "I" (Integer) se usa para números enteros en ABAP.'
+                            },
+                            {
+                                title: 'Declaración de Variables',
+                                type: 'fill-blank',
+                                question: 'Completa la declaración de una variable de texto en ABAP:',
+                                code: `DATA: lv_nombre TYPE ______(50).`,
+                                placeholder: 'Escribe el tipo de dato...',
+                                correct: 'string',
+                                explanation: 'STRING es el tipo para texto variable, C(50) sería para texto fijo de 50 caracteres.'
+                            },
+                            {
+                                title: 'Tipo de Dato Decimal',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es el tipo de dato más apropiado para almacenar importes monetarios?',
+                                options: ['I', 'F', 'P', 'STRING'],
+                                correct: 2,
+                                explanation: 'El tipo "P" (Packed) es ideal para números decimales y cálculos monetarios.'
+                            }
+                        ],
+                        'estructuras-control': [
+                            {
+                                title: 'Estructura IF-ENDIF',
+                                type: 'fill-blank',
+                                question: 'Completa la estructura condicional:',
+                                code: `IF lv_edad > 18.\n  WRITE: 'Mayor de edad'.\n______.`,
+                                placeholder: 'Escribe la palabra clave...',
+                                correct: 'endif',
+                                explanation: 'ENDIF cierra la estructura IF en ABAP.'
+                            },
+                            {
+                                title: 'Operadores Lógicos',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es el operador lógico AND en ABAP?',
+                                options: ['&&', 'AND', '&', 'Y'],
+                                correct: 1,
+                                explanation: 'En ABAP se usa la palabra "AND" para el operador lógico Y.'
+                            }
+                        ],
+                        'tablas-internas': [
+                            {
+                                title: 'Declaración de Tabla Interna',
+                                type: 'fill-blank',
+                                question: 'Declara una tabla interna de tipo estándar:',
+                                code: `DATA: lt_empleados TYPE ______ TABLE OF ty_empleado.`,
+                                placeholder: 'Tipo de tabla...',
+                                correct: 'standard',
+                                explanation: 'STANDARD TABLE es el tipo más común de tabla interna en ABAP.'
+                            }
+                        ]
+                    },
+                    intermediate: {
+                        'abap-oo': [
+                            {
+                                title: 'Definición de Clase',
+                                type: 'fill-blank',
+                                question: 'Completa la definición de una clase:',
+                                code: `______ lcl_empleado DEFINITION.\n  PUBLIC SECTION.\n    DATA: mv_nombre TYPE string.\n  PRIVATE SECTION.\n    DATA: mv_salario TYPE p.\n______.`,
+                                placeholder: 'Palabras clave...',
+                                correct: ['class', 'endclass'],
+                                explanation: 'Las clases se definen con CLASS...ENDCLASS en ABAP.'
+                            }
+                        ],
+                        'field-symbols': [
+                            {
+                                title: 'Declaración de Field Symbol',
+                                type: 'fill-blank',
+                                question: 'Declara un field symbol:',
+                                code: `______-SYMBOLS: <fs_empleado> TYPE ty_empleado.`,
+                                placeholder: 'Palabra clave...',
+                                correct: 'field',
+                                explanation: 'FIELD-SYMBOLS declara un field symbol que actúa como puntero.'
+                            }
+                        ],
+                        'modularizacion': [
+                            {
+                                title: 'Módulos de Función',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la principal ventaja de los módulos de función?',
+                                options: [
+                                    'Son más rápidos',
+                                    'Permiten reutilización de código',
+                                    'Ocupan menos memoria',
+                                    'Son más seguros'
+                                ],
+                                correct: 1,
+                                explanation: 'Los módulos de función permiten reutilizar código y centralizar lógica común.'
+                            }
+                        ]
+                    },
+                    advanced: {
+                        'patrones-diseno': [
+                            {
+                                title: 'Factory Pattern',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es el beneficio principal del patrón Factory?',
+                                options: [
+                                    'Mejora el rendimiento',
+                                    'Centraliza la creación de objetos',
+                                    'Reduce el uso de memoria',
+                                    'Simplifica la herencia'
+                                ],
+                                correct: 1,
+                                explanation: 'El patrón Factory centraliza y controla la creación de objetos.'
+                            }
+                        ],
+                        'performance': [
+                            {
+                                title: 'Optimización SQL',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la mejor práctica para consultas SQL en ABAP?',
+                                options: [
+                                    'Usar SELECT *',
+                                    'Usar SELECT con campos específicos',
+                                    'Usar múltiples SELECT individuales',
+                                    'Evitar WHERE clause'
+                                ],
+                                correct: 1,
+                                explanation: 'SELECT con campos específicos reduce transferencia de datos y mejora rendimiento.'
+                            }
+                        ]
+                    }
+                },
+                schemas: {
+                    beginner: {
+                        'conceptos-basicos': [
+                            {
+                                title: '¿Qué es un Esquema SAP?',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la definición correcta de un esquema en SAP?',
+                                options: [
+                                    'Una tabla de base de datos',
+                                    'Un conjunto de reglas y cálculos que se ejecutan automáticamente',
+                                    'Un reporte de datos',
+                                    'Una transacción específica'
+                                ],
+                                correct: 1,
+                                explanation: 'Un esquema SAP es un conjunto de reglas, cálculos y validaciones que se ejecutan automáticamente en procesos específicos.'
+                            },
+                            {
+                                title: 'Tipos de Esquemas',
+                                type: 'multiple-choice',
+                                question: '¿Cuáles son los tres tipos principales de esquemas en SAP?',
+                                options: [
+                                    'Cálculo, Validación y Sustitución',
+                                    'Entrada, Proceso y Salida',
+                                    'Maestro, Transaccional y Histórico',
+                                    'Activo, Pasivo y Neutral'
+                                ],
+                                correct: 0,
+                                explanation: 'Los tres tipos principales son: Esquemas de Cálculo, Esquemas de Validación y Esquemas de Sustitución.'
+                            }
+                        ],
+                        'configuracion': [
+                            {
+                                title: 'Creación de Esquemas',
+                                type: 'multiple-choice',
+                                question: '¿En qué herramienta se crean los esquemas SAP?',
+                                options: [
+                                    'SE80',
+                                    'SPRO (IMG)',
+                                    'SE11',
+                                    'SM30'
+                                ],
+                                correct: 1,
+                                explanation: 'Los esquemas se crean y configuran en SPRO (Implementation Guide).'
+                            }
+                        ]
+                    },
+                    intermediate: {
+                        'esquemas-avanzados': [
+                            {
+                                title: 'Configuración de Esquemas',
+                                type: 'multiple-choice',
+                                question: '¿En qué transacción se configuran los esquemas de contabilización automática?',
+                                options: ['OB41', 'OBX1', 'OBYC', 'OBA1'],
+                                correct: 0,
+                                explanation: 'OB41 es la transacción para configurar esquemas de contabilización automática en SAP.'
+                            }
+                        ]
+                    },
+                    advanced: {
+                        'optimizacion': [
+                            {
+                                title: 'Esquemas Complejos',
+                                type: 'multiple-choice',
+                                question: '¿Cuál es la mejor práctica para esquemas con muchos pasos?',
+                                options: [
+                                    'Usar un solo esquema grande',
+                                    'Dividir en múltiples esquemas más pequeños',
+                                    'Evitar usar esquemas',
+                                    'Usar solo validaciones manuales'
+                                ],
+                                correct: 1,
+                                explanation: 'Es mejor dividir esquemas complejos en múltiples esquemas más pequeños y manejables.'
+                            }
+                        ]
+                    }
+                }
+            };
+
+            const checkAnswer = (answer) => {
+                const currentLessonData = lessons[appState.selectedModule][appState.selectedLevel][appState.selectedSubsection][appState.currentLesson];
+                let correct = false;
+                
+                if (currentLessonData.type === 'multiple-choice') {
+                    correct = answer === currentLessonData.correct;
+                } else if (currentLessonData.type === 'fill-blank') {
+                    const userAnswerLower = answer.toLowerCase().trim();
+                    
+                    if (Array.isArray(currentLessonData.correct)) {
+                        correct = currentLessonData.correct.every(correctAnswer => 
+                            userAnswerLower.includes(correctAnswer.toLowerCase())
+                        );
+                    } else {
+                        correct = userAnswerLower === currentLessonData.correct.toLowerCase();
+                    }
+                }
+
+                setIsCorrect(correct);
+                setShowResult(true);
+                
+                // Marcar lección como completada y actualizar progreso
+                markLessonCompleted(appState.selectedModule, appState.selectedLevel, appState.selectedSubsection, appState.currentLesson, correct);
+                
+                if (correct) {
+                    updateAppState({ score: appState.score + 1 });
+                }
+            };
+
+            const handleMultipleChoice = (optionIndex) => {
+                checkAnswer(optionIndex);
+            };
+
+            const handleFillBlank = () => {
+                if (userAnswer.trim()) {
+                    checkAnswer(userAnswer);
+                }
+            };
+
+            const nextLesson = () => {
+                setShowResult(false);
+                setUserAnswer('');
+                setSelectedAnswers([]);
+                setIsCorrect(false);
+                
+                if (appState.currentLesson < lessons[appState.selectedModule][appState.selectedLevel][appState.selectedSubsection].length - 1) {
+                    updateAppState({ currentLesson: appState.currentLesson + 1 });
+                } else {
+                    updateAppState({ currentScreen: 'completed' });
+                }
+            };
+
+            const resetApp = () => {
+                updateAppState({
+                    currentScreen: 'home',
+                    selectedModule: null,
+                    selectedLevel: null,
+                    selectedSubsection: null,
+                    currentLesson: 0,
+                    score: 0
+                });
+            };
+
+            // Pantalla principal
+            if (appState.currentScreen === 'home') {
+                return React.createElement('div', { className: "min-h-screen bg-gray-50 p-4" },
+                    React.createElement('div', { className: "max-w-md mx-auto" },
+                        React.createElement('div', { className: "text-center mb-8 pt-8" },
+                            React.createElement('div', { className: "w-16 h-16 bg-blue-600 rounded-2xl mx-auto mb-4 flex items-center justify-center" },
+                                React.createElement(BookOpen, { className: "w-8 h-8 text-white" })
+                            ),
+                            React.createElement('h1', { className: "text-3xl font-light text-gray-900 mb-2" }, 'SAP Learning'),
+                            React.createElement('p', { className: "text-gray-600" }, 'Aprende SAP de forma interactiva'),
+                            React.createElement('div', { className: "mt-4 flex justify-center space-x-4" },
+                                React.createElement('button', {
+                                    onClick: resetProgress,
+                                    className: "text-sm text-red-600 hover:text-red-800 underline"
+                                }, 'Reiniciar Progreso')
+                            )
+                        ),
+                        React.createElement('div', { className: "space-y-4" },
+                            Object.entries(modules).map(([key, module]) => {
+                                // Calcular progreso general del módulo
+                                const moduleSubsections = Object.keys(subsections[key] || {}).flatMap(level => 
+                                    Object.keys(subsections[key][level] || {}).map(subsection => `${key}-${level}-${subsection}`)
+                                );
+                                const moduleProgress = moduleSubsections.reduce((acc, subKey) => {
+                                    const progress = appState.moduleProgress[subKey] || { completed: 0, total: 0, score: 0 };
+                                    acc.completed += progress.completed;
+                                    acc.total += progress.total;
+                                    acc.score += progress.score;
+                                    return acc;
+                                }, { completed: 0, total: 0, score: 0 });
+                                
+                                const progressPercentage = moduleProgress.total > 0 ? Math.round((moduleProgress.completed / moduleProgress.total) * 100) : 0;
+                                
+                                return React.createElement('button', {
+                                    key: key,
+                                    onClick: () => {
+                                        updateAppState({ selectedModule: key, currentScreen: 'levels' });
+                                    },
+                                    className: `w-full p-6 rounded-2xl border-2 ${module.color} hover:shadow-lg transition-all duration-200 text-left`
+                                },
+                                    React.createElement('div', { className: "flex items-center justify-between" },
+                                        React.createElement('div', { className: "flex items-center space-x-4" },
+                                            React.createElement(module.icon, { className: "w-8 h-8 text-gray-700" }),
+                                            React.createElement('div', null,
+                                                React.createElement('h3', { className: "text-xl font-medium text-gray-900" }, module.title),
+                                                React.createElement('p', { className: "text-gray-600 text-sm mt-1" }, module.description),
+                                                moduleProgress.total > 0 && React.createElement('div', { className: "mt-2" },
+                                                    React.createElement('div', { className: "w-32 bg-gray-200 rounded-full h-2" },
+                                                        React.createElement('div', {
+                                                            className: "bg-blue-600 h-2 rounded-full",
+                                                            style: { width: `${progressPercentage}%` }
+                                                        })
+                                                    ),
+                                                    React.createElement('p', { className: "text-xs text-gray-500 mt-1" },
+                                                        `${progressPercentage}% completado (${moduleProgress.score}/${moduleProgress.total})`
+                                                    )
+                                                )
+                                            )
+                                        ),
+                                        React.createElement(ChevronRight, { className: "w-6 h-6 text-gray-400" })
+                                    )
+                                );
+                            })
+                        )
+                    )
+                );
+            }
+
+            // Pantalla de niveles
+            if (appState.currentScreen === 'levels') {
+                return React.createElement('div', { className: "min-h-screen bg-gray-50 p-4" },
+                    React.createElement('div', { className: "max-w-md mx-auto" },
+                        React.createElement('div', { className: "flex items-center mb-6 pt-4" },
+                            React.createElement('button', {
+                                onClick: () => updateAppState({ currentScreen: 'home' }),
+                                className: "p-2 hover:bg-gray-200 rounded-full transition-colors"
+                            },
+                                React.createElement(ChevronLeft, { className: "w-6 h-6 text-gray-600" })
+                            ),
+                            React.createElement('h2', { className: "text-2xl font-light text-gray-900 ml-4" },
+                                `Niveles de ${modules[appState.selectedModule].title}`
+                            )
+                        ),
+                        React.createElement('div', { className: "space-y-4" },
+                            Object.entries(levels).map(([key, level]) => {
+                                const subsectionCount = Object.keys(subsections[appState.selectedModule][key] || {}).length;
+                                const isAvailable = subsectionCount > 0;
+                                
+                                return React.createElement('button', {
+                                    key: key,
+                                    onClick: () => {
+                                        if (isAvailable) {
+                                            updateAppState({ selectedLevel: key, currentScreen: 'subsections' });
+                                        }
+                                    },
+                                    disabled: !isAvailable,
+                                    className: `w-full p-6 rounded-2xl border-2 transition-all duration-200 text-left ${
+                                        isAvailable 
+                                            ? 'border-gray-200 bg-white hover:shadow-lg cursor-pointer' 
+                                            : 'border-gray-100 bg-gray-50 cursor-not-allowed opacity-60'
+                                    }`
+                                },
+                                    React.createElement('div', { className: "flex items-center justify-between" },
+                                        React.createElement('div', { className: "flex items-center space-x-4" },
+                                            React.createElement('div', { className: "text-3xl" }, level.icon),
+                                            React.createElement('div', null,
+                                                React.createElement('h3', { className: "text-xl font-medium text-gray-900" }, level.title),
+                                                React.createElement('p', { className: "text-gray-600 text-sm mt-1" }, level.description),
+                                                React.createElement('p', { 
+                                                    className: `text-xs mt-1 ${isAvailable ? 'text-blue-600' : 'text-gray-400'}`
+                                                }, isAvailable ? `${subsectionCount} secciones` : 'Próximamente')
+                                            )
+                                        ),
+                                        isAvailable && React.createElement(ChevronRight, { className: "w-6 h-6 text-gray-400" })
+                                    )
+                                );
+                            })
+                        )
+                    )
+                );
+            }
+
+            // Pantalla de subsecciones
+            if (appState.currentScreen === 'subsections') {
+                return React.createElement('div', { className: "min-h-screen bg-gray-50 p-4" },
+                    React.createElement('div', { className: "max-w-md mx-auto" },
+                        React.createElement('div', { className: "flex items-center mb-6 pt-4" },
+                            React.createElement('button', {
+                                onClick: () => updateAppState({ currentScreen: 'levels' }),
+                                className: "p-2 hover:bg-gray-200 rounded-full transition-colors"
+                            },
+                                React.createElement(ChevronLeft, { className: "w-6 h-6 text-gray-600" })
+                            ),
+                            React.createElement('h2', { className: "text-2xl font-light text-gray-900 ml-4" },
+                                levels[appState.selectedLevel].title
+                            )
+                        ),
+                        React.createElement('div', { className: "space-y-4" },
+                            Object.entries(subsections[appState.selectedModule][appState.selectedLevel]).map(([key, subsection]) => {
+                                const lessonCount = lessons[appState.selectedModule][appState.selectedLevel][key]?.length || 0;
+                                const isAvailable = lessonCount > 0;
+                                const progress = getSubsectionProgress(appState.selectedModule, appState.selectedLevel, key);
+                                const progressPercentage = progress.total > 0 ? Math.round((progress.completed / progress.total) * 100) : 0;
+                                
+                                return React.createElement('button', {
+                                    key: key,
+                                    onClick: () => {
+                                        if (isAvailable) {
+                                            updateAppState({ 
+                                                selectedSubsection: key, 
+                                                currentLesson: 0, 
+                                                score: 0, 
+                                                currentScreen: 'lesson' 
+                                            });
+                                        }
+                                    },
+                                    disabled: !isAvailable,
+                                    className: `w-full p-6 rounded-2xl border-2 transition-all duration-200 text-left ${
+                                        isAvailable 
+                                            ? `border-gray-200 ${subsection.color} hover:shadow-lg cursor-pointer` 
+                                            : 'border-gray-100 bg-gray-50 cursor-not-allowed opacity-60'
+                                    }`
+                                },
+                                    React.createElement('div', { className: "flex items-center justify-between" },
+                                        React.createElement('div', { className: "flex items-center space-x-4" },
+                                            React.createElement('div', { className: "text-3xl" }, subsection.icon),
+                                            React.createElement('div', null,
+                                                React.createElement('h3', { className: "text-xl font-medium text-gray-900" }, subsection.title),
+                                                React.createElement('p', { className: "text-gray-600 text-sm mt-1" }, subsection.description),
+                                                React.createElement('p', { 
+                                                    className: `text-xs mt-1 ${isAvailable ? 'text-blue-600' : 'text-gray-400'}`
+                                                }, lessonCount > 0 ? `${lessonCount} lecciones` : 'Próximamente'),
+                                                progress.total > 0 && React.createElement('div', { className: "mt-2" },
+                                                    React.createElement('div', { className: "w-32 bg-gray-200 rounded-full h-2" },
+                                                        React.createElement('div', {
+                                                            className: "bg-green-600 h-2 rounded-full",
+                                                            style: { width: `${progressPercentage}%` }
+                                                        })
+                                                    ),
+                                                    React.createElement('p', { className: "text-xs text-gray-500 mt-1" },
+                                                        `${progressPercentage}% - ${progress.score}/${progress.total} correctas`
+                                                    )
+                                                )
+                                            )
+                                        ),
+                                        isAvailable && React.createElement(ChevronRight, { className: "w-6 h-6 text-gray-400" })
+                                    )
+                                );
+                            })
+                        )
+                    )
+                );
+            }
+
+            // Pantalla de lección
+            if (appState.currentScreen === 'lesson') {
+                const currentLessonData = lessons[appState.selectedModule][appState.selectedLevel][appState.selectedSubsection][appState.currentLesson];
+                const totalLessons = lessons[appState.selectedModule][appState.selectedLevel][appState.selectedSubsection].length;
+                const progressPercent = ((appState.currentLesson + 1) / totalLessons) * 100;
+
+                return React.createElement('div', { className: "min-h-screen bg-gray-50 p-4" },
+                    React.createElement('div', { className: "max-w-md mx-auto" },
+                        React.createElement('div', { className: "flex items-center justify-between mb-6 pt-4" },
+                            React.createElement('button', {
+                                onClick: () => updateAppState({ currentScreen: 'subsections' }),
+                                className: "p-2 hover:bg-gray-200 rounded-full transition-colors"
+                            },
+                                React.createElement(ChevronLeft, { className: "w-6 h-6 text-gray-600" })
+                            ),
+                            React.createElement('div', { className: "flex-1 mx-4" },
+                                React.createElement('div', { className: "w-full bg-gray-200 rounded-full h-2" },
+                                    React.createElement('div', { 
+                                        className: "bg-blue-600 h-2 rounded-full transition-all duration-500",
+                                        style: { width: `${progressPercent}%` }
+                                    })
+                                ),
+                                React.createElement('p', { className: "text-xs text-gray-600 mt-1 text-center" },
+                                    `${appState.currentLesson + 1} de ${totalLessons} • Puntos: ${appState.score}`
+                                )
+                            )
+                        ),
+
+                        React.createElement('div', { className: "bg-white rounded-2xl p-6 mb-6 shadow-sm" },
+                            React.createElement('h3', { className: "text-xl font-medium text-gray-900 mb-4" },
+                                currentLessonData.title
+                            ),
+                            React.createElement('p', { className: "text-gray-700 mb-4" }, currentLessonData.question),
+
+                            currentLessonData.code && React.createElement('div', { className: "bg-gray-900 rounded-lg p-4 mb-4 overflow-x-auto" },
+                                React.createElement('pre', { className: "text-green-400 text-sm font-mono whitespace-pre-wrap" },
+                                    currentLessonData.code
+                                )
+                            ),
+
+                            React.createElement('div', { className: "space-y-3" },
+                                currentLessonData.type === 'multiple-choice' ?
+                                    currentLessonData.options.map((option, index) =>
+                                        React.createElement('button', {
+                                            key: index,
+                                            onClick: () => handleMultipleChoice(index),
+                                            disabled: showResult,
+                                            className: `w-full p-4 text-left rounded-xl border-2 transition-all duration-200 ${
+                                                showResult 
+                                                    ? (index === currentLessonData.correct 
+                                                        ? 'border-green-500 bg-green-50' 
+                                                        : 'border-gray-200 opacity-60')
+                                                    : 'border-gray-200 hover:border-blue-300 hover:bg-blue-50'
+                                            } disabled:cursor-not-allowed`
+                                        },
+                                            React.createElement('span', { className: "flex items-center" },
+                                                React.createElement('span', { className: "w-6 h-6 rounded-full border-2 border-gray-300 mr-3 flex items-center justify-center text-xs" },
+                                                    String.fromCharCode(65 + index)
+                                                ),
+                                                option
+                                            )
+                                        )
+                                    ) :
+                                    React.createElement('div', null,
+                                        React.createElement('input', {
+                                            type: "text",
+                                            value: userAnswer,
+                                            onChange: (e) => setUserAnswer(e.target.value),
+                                            placeholder: currentLessonData.placeholder || "Escribe tu respuesta...",
+                                            className: "w-full p-4 border-2 border-gray-200 rounded-xl focus:border-blue-400 focus:outline-none transition-colors",
+                                            disabled: showResult,
+                                            onKeyPress: (e) => e.key === 'Enter' && !showResult && handleFillBlank()
+                                        }),
+                                        !showResult && React.createElement('button', {
+                                            onClick: handleFillBlank,
+                                            disabled: !userAnswer.trim(),
+                                            className: "w-full mt-3 bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition-colors disabled:bg-gray-400 disabled:cursor-not-allowed"
+                                        }, 'Verificar Respuesta')
+                                    )
+                            )
+                        ),
+
+                        showResult && React.createElement('div', { 
+                            className: `rounded-2xl p-6 shadow-sm ${isCorrect ? 'bg-green-50 border-2 border-green-200' : 'bg-red-50 border-2 border-red-200'}`
+                        },
+                            React.createElement('div', { className: "text-center mb-4" },
+                                React.createElement('div', { 
+                                    className: `w-16 h-16 mx-auto mb-3 flex items-center justify-center rounded-full ${isCorrect ? 'bg-green-100' : 'bg-red-100'}`
+                                },
+                                    isCorrect ? 
+                                        React.createElement(Check, { className: "w-8 h-8 text-green-600" }) :
+                                        React.createElement(X, { className: "w-8 h-8 text-red-600" })
+                                ),
+                                React.createElement('h4', { 
+                                    className: `text-lg font-medium mb-2 ${isCorrect ? 'text-green-900' : 'text-red-900'}`
+                                }, isCorrect ? '¡Correcto!' : 'Incorrecto'),
+                                React.createElement('p', { 
+                                    className: `text-sm ${isCorrect ? 'text-green-700' : 'text-red-700'}`
+                                }, currentLessonData.explanation)
+                            ),
+                            React.createElement('button', {
+                                onClick: nextLesson,
+                                className: "w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition-colors"
+                            }, appState.currentLesson < lessons[appState.selectedModule][appState.selectedLevel][appState.selectedSubsection].length - 1 ? 'Siguiente Lección' : 'Ver Resultados')
+                        )
+                    )
+                );
+            }
+
+            // Pantalla de completado
+            if (appState.currentScreen === 'completed') {
+                const totalLessons = lessons[appState.selectedModule][appState.selectedLevel][appState.selectedSubsection].length;
+                const percentage = Math.round((appState.score / totalLessons) * 100);
+                
+                return React.createElement('div', { className: "min-h-screen bg-gray-50 p-4 flex items-center justify-center" },
+                    React.createElement('div', { className: "max-w-md mx-auto text-center" },
+                        React.createElement('div', { 
+                            className: `w-20 h-20 rounded-full mx-auto mb-6 flex items-center justify-center ${
+                                percentage >= 80 ? 'bg-green-600' : percentage >= 60 ? 'bg-yellow-500' : 'bg-red-500'
+                            }`
+                        },
+                            React.createElement(Award, { className: "w-10 h-10 text-white" })
+                        ),
+                        React.createElement('h2', { className: "text-3xl font-light text-gray-900 mb-4" }, '¡Sección Completada!'),
+                        React.createElement('p', { className: "text-gray-600 mb-2" },
+                            `Has terminado ${subsections[appState.selectedModule][appState.selectedLevel][appState.selectedSubsection].title}`
+                        ),
+                        React.createElement('div', { className: "text-center mb-6" },
+                            React.createElement('p', { className: "text-4xl font-bold text-blue-600 mb-2" }, `${percentage}%`),
+                            React.createElement('p', { className: "text-gray-600" },
+                                `${appState.score} de ${totalLessons} respuestas correctas`
+                            )
+                        ),
+                        React.createElement('div', { className: "space-y-4" },
+                            React.createElement('button', {
+                                onClick: () => updateAppState({ currentScreen: 'subsections' }),
+                                className: "w-full bg-blue-600 text-white py-3 rounded-xl hover:bg-blue-700 transition-colors"
+                            }, 'Elegir Otra Sección'),
+                            React.createElement('button', {
+                                onClick: resetApp,
+                                className: "w-full border-2 border-gray-300 text-gray-700 py-3 rounded-xl hover:bg-gray-50 transition-colors"
+                            }, 'Volver al Inicio')
+                        )
+                    )
+                );
+            }
+        };
+
+        // Renderizar la aplicación
+        ReactDOM.render(React.createElement(SAPLearningApp), document.getElementById('root'));
+    </script>
+</body>
+</html>
